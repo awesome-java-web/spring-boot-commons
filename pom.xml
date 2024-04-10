@@ -70,6 +70,12 @@
 				<artifactId>mybatis</artifactId>
 				<version>${mybatis.version}</version>
 			</dependency>
+			<!-- slf4j-api -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j-api.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

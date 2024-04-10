@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>spring-boot-commons-mybatis</artifactId>
-	<version>${project.version}</version>
+	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 
 	<name>Spring Boot Commons Mybatis</name>
@@ -65,6 +65,12 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
