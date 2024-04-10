@@ -57,7 +57,21 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!--======================== dependencies version management =======================-->
+		<mybatis.version>3.5.15</mybatis.version>
+		<slf4j-api.version>2.0.12</slf4j-api.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<distributionManagement>
 		<snapshotRepository>
