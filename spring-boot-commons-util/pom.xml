@@ -11,12 +11,12 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>spring-boot-commons-scripting</artifactId>
+    <artifactId>spring-boot-commons-util</artifactId>
     <version>${revision}</version>
     <packaging>jar</packaging>
 
-    <name>Spring Boot Commons Scripting</name>
-    <description>Spring Boot Commons Scripting</description>
+    <name>Spring Boot Commons Util</name>
+    <description>Spring Boot Commons Util</description>
     <url>https://github.com/awesome-java-web/spring-boot-commons</url>
 
     <organization>
@@ -51,36 +51,6 @@
         <system>GitHub</system>
         <url>https://github.com/awesome-java-web/spring-boot-commons/issues</url>
     </issueManagement>
-
-    <dependencies>
-        <!-- groovy -->
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy</artifactId>
-        </dependency>
-        <!-- groovy-sandbox -->
-        <dependency>
-            <groupId>org.kohsuke</groupId>
-            <artifactId>groovy-sandbox</artifactId>
-        </dependency>
-        <!-- caffeine -->
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- spring-boot-commons-util -->
-        <dependency>
-            <groupId>io.github.awesome-java-web</groupId>
-            <artifactId>spring-boot-commons-util</artifactId>
-        </dependency>
-    </dependencies>
 
     <distributionManagement>
         <snapshotRepository>
