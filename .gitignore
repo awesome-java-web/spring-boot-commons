@@ -1,0 +1,6 @@
+# IntelliJ IDEA files
+*.iml
+.idea/
+
+# Maven build files
+target/
