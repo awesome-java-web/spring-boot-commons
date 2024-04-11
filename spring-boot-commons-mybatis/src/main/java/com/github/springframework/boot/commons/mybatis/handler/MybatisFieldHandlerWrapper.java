@@ -49,10 +49,9 @@ public class MybatisFieldHandlerWrapper {
             }
             for (String tableFieldName : tableFieldNames) {
                 final String fieldCamelCaseName = FieldNameUtils.underscoreToCamelCase(tableFieldName);
+                // Do not use map.get() method directly here, because if the map instanceof
+                // org.apache.ibatis.binding.MapperMethod.ParamMap, it will throw an exception.
                 if (map.containsKey(fieldCamelCaseName)) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Map<K, V> contains key '{}', start handling '{}.{}'", fieldCamelCaseName, sqlTableName, tableFieldName);
-                    }
                     Object mapValue = map.get(fieldCamelCaseName);
                     Object handledValue = handler.handle(sqlTableName, tableFieldName, mapValue);
                     map.put(fieldCamelCaseName, handledValue);

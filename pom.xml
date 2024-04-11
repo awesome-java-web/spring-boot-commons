@@ -61,6 +61,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!--======================== dependencies version management =======================-->
+		<jetbrains-annotations.version>24.1.0</jetbrains-annotations.version>
 		<slf4j-api.version>2.0.12</slf4j-api.version>
 		<mybatis.version>3.5.15</mybatis.version>
 		<groovy.version>4.0.6</groovy.version>
@@ -76,6 +77,18 @@
 		<maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
 		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
 	</properties>
+
+	<!--======================== common dependencies for all internal modules ==========================-->
+
+	<dependencies>
+		<!-- jetbrains-annotations -->
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>${jetbrains-annotations.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
 	<dependencyManagement>
 		<dependencies>
