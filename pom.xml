@@ -7,7 +7,7 @@
 
 	<groupId>io.github.awesome-java-web</groupId>
 	<artifactId>spring-boot-commons</artifactId>
-	<version>${revision}</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Spring Boot Commons</name>
@@ -48,6 +48,7 @@
 	</issueManagement>
 
 	<modules>
+		<module>spring-boot-commons-all</module>
 		<module>spring-boot-commons-mybatis</module>
 		<module>spring-boot-commons-scripting</module>
 		<module>spring-boot-commons-util</module>
@@ -55,7 +56,6 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<revision>1.0.0-SNAPSHOT</revision>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -79,12 +79,16 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!--======================== internal module dependencies management =======================-->
+
 			<!-- spring-boot-commons-util -->
 			<dependency>
 				<groupId>io.github.awesome-java-web</groupId>
 				<artifactId>spring-boot-commons-util</artifactId>
-				<version>${revision}</version>
+				<version>${project.version}</version>
 			</dependency>
+
+			<!--======================== 3rd open source dependencies management =======================-->
 
 			<!-- slf4j-api -->
 			<dependency>
