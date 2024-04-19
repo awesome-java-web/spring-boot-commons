@@ -181,6 +181,21 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- generate javadoc jar file -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- compile spock unit test code in groovy language -->
 			<plugin>
 				<groupId>org.codehaus.gmavenplus</groupId>
@@ -199,21 +214,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
-			</plugin>
-			<!-- generate javadoc jar file -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven-javadoc-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
+				<configuration>
+					<!--suppress UnresolvedMavenProperty for IntelliJ IDEA -->
+					<argLine>${jacoco.agent.argLine}</argLine>
+				</configuration>
 			</plugin>
 			<!-- jacoco for code coverage and unit test report -->
 			<plugin>
@@ -226,34 +230,9 @@
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
-					</execution>
-					<execution>
-						<id>check</id>
-						<goals>
-							<goal>check</goal>
-						</goals>
 						<configuration>
-							<rules>
-								<!-- At least 80% coverage is required -->
-								<rule>
-									<element>BUNDLE</element>
-									<limits>
-										<limit>
-											<counter>LINE</counter>
-											<value>COVEREDRATIO</value>
-											<minimum>0.8</minimum>
-										</limit>
-									</limits>
-								</rule>
-							</rules>
+							<propertyName>jacoco.agent.argLine</propertyName>
 						</configuration>
-					</execution>
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>

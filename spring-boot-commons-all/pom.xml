@@ -72,6 +72,29 @@
         </dependency>
     </dependencies>
 
+	<build>
+		<plugins>
+			<!-- generate aggregate unit test report -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report-aggregate</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/unit-test-reports</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
