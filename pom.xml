@@ -63,7 +63,7 @@
 		<!--======================== dependencies version management =======================-->
 		<jetbrains-annotations.version>24.1.0</jetbrains-annotations.version>
 		<junit5.version>5.10.2</junit5.version>
-		<mockito.version>3.12.4</mockito.version>
+		<mockito.version>4.11.0</mockito.version>
 		<slf4j-api.version>2.0.12</slf4j-api.version>
 		<mybatis.version>3.5.15</mybatis.version>
 		<groovy.version>4.0.6</groovy.version>

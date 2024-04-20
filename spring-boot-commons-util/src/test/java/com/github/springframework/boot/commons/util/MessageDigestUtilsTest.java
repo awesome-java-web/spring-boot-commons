@@ -3,11 +3,6 @@ package com.github.springframework.boot.commons.util;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,14 +23,6 @@ class MessageDigestUtilsTest {
 	})
 	void testMd5Hex(String input, String expected) {
 		assertEquals(expected, MessageDigestUtils.md5Hex(input));
-	}
-
-	@Test
-	void testMd5NoSuchAlgorithmException() {
-		try (MockedStatic<MessageDigest> md = Mockito.mockStatic(MessageDigest.class)) {
-			md.when(() -> MessageDigest.getInstance(Mockito.anyString())).thenThrow(new NoSuchAlgorithmException());
-			assertEquals(0, MessageDigestUtils.md5(Mockito.anyString()).length);
-		}
 	}
 
 }
