@@ -5,7 +5,7 @@ import java.math.BigInteger;
 
 public final class NumberUtils {
 
-    private NumberUtils() {
+    NumberUtils() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 

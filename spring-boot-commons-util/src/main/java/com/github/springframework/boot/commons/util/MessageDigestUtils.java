@@ -8,7 +8,7 @@ public final class MessageDigestUtils {
 
     private static final String MESSAGE_DIGEST_ALGORITHM_MD5 = "MD5";
 
-    private MessageDigestUtils() {
+    MessageDigestUtils() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
