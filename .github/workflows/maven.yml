@@ -65,5 +65,5 @@ jobs:
       # Upload coverage reports to Codecov
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
