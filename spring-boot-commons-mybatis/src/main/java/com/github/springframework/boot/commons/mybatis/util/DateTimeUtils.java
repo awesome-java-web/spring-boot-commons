@@ -12,7 +12,7 @@ public final class DateTimeUtils {
 
     public static final String DEFAULT_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    private DateTimeUtils() {
+    DateTimeUtils() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
