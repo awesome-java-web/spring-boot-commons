@@ -15,7 +15,7 @@ public final class FieldNameUtils {
 
     private static final String UNDERSCORE = "_";
 
-    private FieldNameUtils() {
+    FieldNameUtils() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
