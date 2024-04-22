@@ -1,5 +1,6 @@
 package com.github.springframework.boot.commons.mybatis.util;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,6 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DateTimeUtilsTest {
+
+    @BeforeAll
+    static void setup() {
+        System.setProperty("user.timezone", "Asia/Shanghai");
+    }
 
     @Test
     void testNewInstance() {
