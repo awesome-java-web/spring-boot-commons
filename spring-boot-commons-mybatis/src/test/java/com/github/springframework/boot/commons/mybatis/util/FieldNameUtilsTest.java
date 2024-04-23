@@ -1,5 +1,6 @@
 package com.github.springframework.boot.commons.mybatis.util;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -16,12 +17,19 @@ import static org.mockito.Mockito.*;
 
 class FieldNameUtilsTest {
 
+	static MockedStatic<LoggerFactory> mockLoggerFactory;
+
 	@BeforeAll
 	static void setup() {
 		Logger mockLogger = mock(Logger.class);
-		MockedStatic<LoggerFactory> mockLoggerFactory = mockStatic(LoggerFactory.class);
+		mockLoggerFactory = mockStatic(LoggerFactory.class);
 		mockLoggerFactory.when(() -> LoggerFactory.getLogger(FieldNameUtils.class)).thenReturn(mockLogger);
 		when(mockLogger.isDebugEnabled()).thenReturn(true);
+	}
+
+	@AfterAll
+	static void cleanup() {
+		mockLoggerFactory.close();
 	}
 
     @Test

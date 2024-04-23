@@ -4,6 +4,7 @@ import org.apache.ibatis.executor.resultset.DefaultResultSetHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Invocation;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,12 +21,19 @@ import static org.mockito.Mockito.*;
 
 class TableNameUtilsTest {
 
+	static MockedStatic<LoggerFactory> mockLoggerFactory;
+
 	@BeforeAll
 	static void setup() {
 		Logger mockLogger = mock(Logger.class);
-		MockedStatic<LoggerFactory> mockLoggerFactory = mockStatic(LoggerFactory.class);
+		mockLoggerFactory = mockStatic(LoggerFactory.class);
 		mockLoggerFactory.when(() -> LoggerFactory.getLogger(TableNameUtils.class)).thenReturn(mockLogger);
 		when(mockLogger.isDebugEnabled()).thenReturn(true);
+	}
+
+	@AfterAll
+	static void cleanup() {
+		mockLoggerFactory.close();
 	}
 
 	@Test
