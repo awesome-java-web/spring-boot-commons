@@ -1,6 +1,10 @@
 package com.github.springframework.boot.commons.mybatis.util;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,8 +12,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class FieldNameUtilsTest {
+
+	@BeforeAll
+	static void setup() {
+		Logger mockLogger = mock(Logger.class);
+		MockedStatic<LoggerFactory> mockLoggerFactory = mockStatic(LoggerFactory.class);
+		mockLoggerFactory.when(() -> LoggerFactory.getLogger(FieldNameUtils.class)).thenReturn(mockLogger);
+		when(mockLogger.isDebugEnabled()).thenReturn(true);
+	}
 
     @Test
     void testNewInstance() {
