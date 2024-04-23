@@ -22,7 +22,7 @@ public final class TableNameUtils {
 
     private static final String SQL_KEYWORD_FROM = "FROM";
 
-    private TableNameUtils() {
+    TableNameUtils() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
