@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,7 +21,7 @@ class DateTimeUtilsTest {
 
     @BeforeAll
     static void setup() {
-        System.setProperty("user.timezone", "Asia/Shanghai");
+		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
     }
 
     @Test
