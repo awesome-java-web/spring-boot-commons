@@ -52,6 +52,12 @@
     </issueManagement>
 
     <dependencies>
+        <!-- spring-boot-commons-i18n -->
+        <dependency>
+            <groupId>io.github.awesome-java-web</groupId>
+            <artifactId>spring-boot-commons-i18n</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- spring-boot-commons-mybatis -->
         <dependency>
             <groupId>io.github.awesome-java-web</groupId>
