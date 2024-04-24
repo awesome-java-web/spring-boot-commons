@@ -40,16 +40,16 @@ class DateTimeUtilsTest {
         ZoneId zoneId = ZoneId.of(targetZoneId);
 
         LocalDateTime result = DateTimeUtils.toLocalDateTime(datetimeAsDefaultZoneId, formatter, zoneId);
-        assertEquals(expected, DateTimeUtils.stringify(result, formatter));
+        assertEquals(expected, result.format(formatter));
 
         SimpleDateFormat sdf = new SimpleDateFormat(DateTimeUtils.DEFAULT_DATE_TIME_PATTERN);
         Date parsedDate = sdf.parse(datetimeAsDefaultZoneId);
         result = DateTimeUtils.toLocalDateTime(parsedDate, zoneId);
-        assertEquals(expected, DateTimeUtils.stringify(result, formatter));
+        assertEquals(expected, result.format(formatter));
 
         LocalDateTime localDateTime = LocalDateTime.parse(datetimeAsDefaultZoneId, formatter);
         result = DateTimeUtils.toLocalDateTime(localDateTime, zoneId);
-        assertEquals(expected, DateTimeUtils.stringify(result, formatter));
+        assertEquals(expected, result.format(formatter));
 
         LocalDate localDate = localDateTime.toLocalDate();
         LocalDate zonedLocalDate = DateTimeUtils.toLocalDate(localDate, zoneId);
@@ -57,7 +57,7 @@ class DateTimeUtilsTest {
 
         Date date = DateTimeUtils.toDate(localDateTime);
         result = DateTimeUtils.toLocalDateTime(date, zoneId);
-        assertEquals(expected, DateTimeUtils.stringify(result, formatter));
+        assertEquals(expected, result.format(formatter));
     }
 
     @ParameterizedTest

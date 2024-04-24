@@ -18,8 +18,7 @@ public final class DateTimeUtils {
 
     public static LocalDateTime toLocalDateTime(final String datetime, DateTimeFormatter formatter, ZoneId targetZoneId) {
         LocalDateTime localDateTime = LocalDateTime.parse(datetime, formatter);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
-        return zonedDateTime.withZoneSameInstant(targetZoneId).toLocalDateTime();
+        return toLocalDateTime(localDateTime, targetZoneId);
     }
 
     public static LocalDateTime toLocalDateTime(Date date, ZoneId targetZoneId) {
@@ -32,6 +31,11 @@ public final class DateTimeUtils {
         return zonedDateTime.withZoneSameInstant(targetZoneId).toLocalDateTime();
     }
 
+	public static LocalDate toLocalDate(final String date, DateTimeFormatter formatter, ZoneId targetZoneId) {
+		LocalDate localDate = LocalDate.parse(date, formatter);
+		return toLocalDate(localDate, targetZoneId);
+	}
+
     public static LocalDate toLocalDate(LocalDate localDate, ZoneId targetZoneId) {
         ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
         return zonedDateTime.withZoneSameInstant(targetZoneId).toLocalDate();
@@ -39,10 +43,6 @@ public final class DateTimeUtils {
 
     public static Date toDate(LocalDateTime localDateTime) {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    }
-
-    public static String stringify(LocalDateTime localDateTime, DateTimeFormatter formatter) {
-        return localDateTime.format(formatter);
     }
 
     public static boolean isParseableLocalDateTime(final String datetime) {
