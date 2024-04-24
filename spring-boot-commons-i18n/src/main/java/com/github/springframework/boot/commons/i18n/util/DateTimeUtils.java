@@ -1,4 +1,4 @@
-package com.github.springframework.boot.commons.mybatis.util;
+package com.github.springframework.boot.commons.i18n.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

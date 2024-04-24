@@ -1,6 +1,6 @@
-package com.github.springframework.boot.commons.mybatis.converter;
+package com.github.springframework.boot.commons.i18n.time;
 
-import com.github.springframework.boot.commons.mybatis.util.DateTimeUtils;
+import com.github.springframework.boot.commons.i18n.util.DateTimeUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

@@ -1,4 +1,4 @@
-package com.github.springframework.boot.commons.mybatis.util;
+package com.github.springframework.boot.commons.i18n.util;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.github.springframework.boot.commons.mybatis.converter;
+package com.github.springframework.boot.commons.i18n.time;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;

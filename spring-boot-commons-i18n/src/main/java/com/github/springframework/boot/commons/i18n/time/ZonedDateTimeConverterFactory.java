@@ -1,10 +1,14 @@
-package com.github.springframework.boot.commons.mybatis.converter;
+package com.github.springframework.boot.commons.i18n.time;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public final class ZonedDateTimeConverterFactory {
+
+	private ZonedDateTimeConverterFactory() {
+		throw new UnsupportedOperationException("Factory class should not be instantiated");
+	}
 
 	@SuppressWarnings("rawtypes")
 	public static ZonedDateTimeConverter getConverter(Object datetime) {
