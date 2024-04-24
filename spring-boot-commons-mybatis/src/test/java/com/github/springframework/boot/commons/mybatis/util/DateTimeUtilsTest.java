@@ -31,7 +31,10 @@ class DateTimeUtilsTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"2022-11-07 00:00:00,Asia/Phnom_Penh,2022-11-06 23:00:00", "2022-11-07 00:00:00,America/New_York,2022-11-06 11:00:00"})
+    @CsvSource({
+			"2022-11-07 00:00:00, Asia/Phnom_Penh, 2022-11-06 23:00:00",
+			"2022-11-07 00:00:00, America/New_York, 2022-11-06 11:00:00"
+	})
     void testToLocalDateTime(String datetimeAsDefaultZoneId, String targetZoneId, String expected) throws ParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTimeUtils.DEFAULT_DATE_TIME_PATTERN);
         ZoneId zoneId = ZoneId.of(targetZoneId);
@@ -58,13 +61,13 @@ class DateTimeUtilsTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"2022-11-07 00:00:00,true", "This is not a LocalDateTime string,false"})
+    @CsvSource({"2022-11-07 00:00:00, true", "This is not a LocalDateTime string, false"})
     void testIsParseableLocalDateTime(String datetime, boolean expected) {
         assertEquals(expected, DateTimeUtils.isParseableLocalDateTime(datetime));
     }
 
     @ParameterizedTest
-    @CsvSource({"2022-11-07,true", "This is not a LocalDate string,false"})
+    @CsvSource({"2022-11-07, true", "This is not a LocalDate string, false"})
     void testIsParseableLocalDate(String date, boolean expected) {
         assertEquals(expected, DateTimeUtils.isParseableLocalDate(date));
     }

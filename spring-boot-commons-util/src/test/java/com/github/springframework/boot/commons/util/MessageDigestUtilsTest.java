@@ -17,9 +17,9 @@ class MessageDigestUtilsTest {
 
 	@ParameterizedTest
 	@CsvSource({
-			"hello world,5eb63bbbe01eeed093cb22bb8f5acdc3",
-			"12345678910,432f45b44c432414d2f97df0e5743818",
-			"test md5Hex,23d03bcab51446d6b9a50aaf26ebe666"
+			"hello world, 5eb63bbbe01eeed093cb22bb8f5acdc3",
+			"12345678910, 432f45b44c432414d2f97df0e5743818",
+			"test md5Hex, 23d03bcab51446d6b9a50aaf26ebe666"
 	})
 	void testMd5Hex(String input, String expected) {
 		assertEquals(expected, MessageDigestUtils.md5Hex(input));
