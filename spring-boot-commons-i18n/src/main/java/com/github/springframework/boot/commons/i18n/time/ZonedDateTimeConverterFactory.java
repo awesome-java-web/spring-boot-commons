@@ -7,7 +7,7 @@ import java.util.Date;
 
 public final class ZonedDateTimeConverterFactory {
 
-	private ZonedDateTimeConverterFactory() {
+	ZonedDateTimeConverterFactory() {
 		throw new UnsupportedOperationException("Factory class should not be instantiated");
 	}
 
