@@ -33,8 +33,15 @@ public class MybatisParameterInterceptor implements Interceptor {
         SqlCommandType sqlCommandType = statement.getSqlCommandType();
         if (sqlCommandType == SqlCommandType.INSERT || sqlCommandType == SqlCommandType.UPDATE) {
             Object parameter = args[1];
-            final String tableName = TableNameUtils.resolveExecutorTableName(invocation);
-            fieldHandlerWrapper.doHandle(parameterFieldHandlerChain, tableName, parameter);
+            String tableName = null;
+            try {
+                tableName = TableNameUtils.resolveExecutorTableName(invocation);
+                fieldHandlerWrapper.doHandle(parameterFieldHandlerChain, tableName, parameter);
+            } catch (Exception e) {
+                logger.error("Error occurred when {} is handling table '{}' with parameter type '{}'",
+                    getClass().getName(), tableName, parameter == null ? null : parameter.getClass().getName()
+                );
+            }
         }
         return invocation.proceed();
     }

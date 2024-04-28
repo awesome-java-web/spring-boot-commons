@@ -19,7 +19,9 @@ public class MybatisFieldHandlerWrapper {
     public void doHandle(List<? extends MybatisFieldHandler> handlerChain, final String sqlTableName, Object object) throws IllegalAccessException {
         for (MybatisFieldHandler handler : handlerChain) {
             if (logger.isDebugEnabled()) {
-                logger.debug("{} start handling table '{}'", handler.getClass().getSimpleName(), sqlTableName);
+                logger.debug("{} start to handle table '{}' with parameter type '{}'",
+                    handler.getClass().getName(), sqlTableName, object == null ? null : object.getClass().getName()
+                );
             }
             if (object instanceof Map) {
                 handleMap(handler, sqlTableName, (Map<String, Object>) object);

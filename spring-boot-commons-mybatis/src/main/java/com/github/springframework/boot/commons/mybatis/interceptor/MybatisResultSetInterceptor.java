@@ -28,8 +28,13 @@ public class MybatisResultSetInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         List<?> resultList = (List<?>) invocation.proceed();
-        final String tableName = TableNameUtils.resolveResultSetTableName(invocation);
-        fieldHandlerWrapper.doHandle(resultSetFieldHandlerChain, tableName, resultList);
+        String tableName = null;
+        try {
+            tableName = TableNameUtils.resolveResultSetTableName(invocation);
+            fieldHandlerWrapper.doHandle(resultSetFieldHandlerChain, tableName, resultList);
+        } catch (Exception e) {
+            logger.error("Error occurred when {} is handling table '{}' with result set '{}'", getClass().getName(), tableName, resultList, e);
+        }
         return resultList;
     }
 
