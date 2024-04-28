@@ -28,10 +28,6 @@ public class MybatisResultSetInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         List<?> resultList = (List<?>) invocation.proceed();
-        // We don't need to handle primitive types in this interceptor
-        if (resultList == null || resultList.isEmpty() || resultList.get(0).getClass().isPrimitive()) {
-            return invocation.proceed();
-        }
         final String tableName = TableNameUtils.resolveResultSetTableName(invocation);
         fieldHandlerWrapper.doHandle(resultSetFieldHandlerChain, tableName, resultList);
         return resultList;
