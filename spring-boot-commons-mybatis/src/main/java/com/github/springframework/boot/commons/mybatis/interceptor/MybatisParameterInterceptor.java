@@ -39,7 +39,7 @@ public class MybatisParameterInterceptor implements Interceptor {
                 fieldHandlerWrapper.doHandle(parameterFieldHandlerChain, tableName, parameter);
             } catch (Exception e) {
                 logger.error("Error occurred when {} is handling table '{}' with parameter type '{}'",
-                    getClass().getName(), tableName, parameter == null ? null : parameter.getClass().getName()
+                    getClass().getName(), tableName, parameter == null ? null : parameter.getClass().getName(), e
                 );
             }
         }
