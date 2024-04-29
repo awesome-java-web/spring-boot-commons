@@ -21,7 +21,7 @@ class ParameterAndResultSetResolver {
 			resolveMap(handler, tableName, (Map<String, Object>) value);
 		} else if (value instanceof Iterable) {
 			resolveIterable(handler, tableName, (Iterable<?>) value);
-		} else if (value != null && !value.getClass().isPrimitive()) {
+		} else if (value != null && isNotPrimitiveOrWrapper(value)) {
 			resolveUserDefinedObject(handler, tableName, value);
 		}
 	}
@@ -70,7 +70,7 @@ class ParameterAndResultSetResolver {
 					logger.debug("Ths inner element is instance of Iterable, use 'handleIterable' method to proceed");
 				}
 				resolveIterable(handler, tableName, (Iterable<?>) element);
-			} else if (!element.getClass().isPrimitive()) {
+			} else if (element != null && isNotPrimitiveOrWrapper(element)) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("The inner element is user defined Java object, use 'handleUserDefinedObject' method to proceed");
 				}
@@ -110,6 +110,13 @@ class ParameterAndResultSetResolver {
 			Object handledValue = handler.handle(tableName, tableFieldName, javaFieldValue);
 			javaField.set(object, handledValue);
 		}
+	}
+
+	private boolean isNotPrimitiveOrWrapper(Object object) {
+		Class<?> clazz = object.getClass();
+		return !clazz.isPrimitive() && clazz != Boolean.class && clazz != Byte.class
+			&& clazz != Character.class && clazz != Short.class && clazz != Integer.class
+			&& clazz != Long.class && clazz != Float.class && clazz != Double.class;
 	}
 
 }
