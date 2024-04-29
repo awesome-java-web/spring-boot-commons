@@ -1,8 +1,8 @@
 package com.github.springframework.boot.commons.mybatis.interceptor;
 
-import com.github.springframework.boot.commons.mybatis.handler.MybatisFieldHandlerWrapper;
+import com.github.springframework.boot.commons.mybatis.handler.MybatisInvocationHandler;
 import com.github.springframework.boot.commons.mybatis.handler.MybatisResultSetFieldHandler;
-import com.github.springframework.boot.commons.mybatis.util.TableNameUtils;
+import com.github.springframework.boot.commons.mybatis.handler.ResultSetInvocationHandler;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
@@ -21,21 +21,13 @@ public class MybatisResultSetInterceptor implements Interceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(MybatisResultSetInterceptor.class);
 
-    private final MybatisFieldHandlerWrapper fieldHandlerWrapper = new MybatisFieldHandlerWrapper();
+    private final MybatisInvocationHandler invocationHandler = new ResultSetInvocationHandler();
 
     private final List<MybatisResultSetFieldHandler> resultSetFieldHandlerChain = new ArrayList<>();
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        List<?> resultList = (List<?>) invocation.proceed();
-        String tableName = null;
-        try {
-            tableName = TableNameUtils.resolveResultSetTableName(invocation);
-            fieldHandlerWrapper.doHandle(resultSetFieldHandlerChain, tableName, resultList);
-        } catch (Exception e) {
-            logger.error("Error occurred when {} is handling table '{}' with result set '{}'", getClass().getName(), tableName, resultList, e);
-        }
-        return resultList;
+        return invocationHandler.preHandle(resultSetFieldHandlerChain, invocation);
     }
 
     @Override
@@ -51,7 +43,7 @@ public class MybatisResultSetInterceptor implements Interceptor {
     public void registerResultSetFieldHandler(MybatisResultSetFieldHandler handler) {
         resultSetFieldHandlerChain.add(handler);
         if (logger.isDebugEnabled()) {
-            logger.debug("{} has been successfully registered for {}", handler.getClass().getSimpleName(), getClass().getSimpleName());
+            logger.debug("{} has been successfully registered for {}", handler.getClass().getName(), getClass().getName());
         }
     }
 

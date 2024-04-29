@@ -19,9 +19,9 @@ public final class FieldNameUtils {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
-    public static List<String> determineTargetFieldNames(Map<String, List<String>> targetTableFields, final String sqlTableName) {
-        if (targetTableFields.containsKey(sqlTableName)) {
-            return targetTableFields.get(sqlTableName);
+    public static List<String> determineTargetFieldNames(Map<String, List<String>> targetTableFields, final String tableName) {
+        if (targetTableFields.containsKey(tableName)) {
+            return targetTableFields.get(tableName);
         }
         return targetTableFields.getOrDefault(MATCH_ALL_SYMBOL, Collections.emptyList());
     }

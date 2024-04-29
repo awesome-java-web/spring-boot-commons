@@ -1,8 +1,8 @@
 package com.github.springframework.boot.commons.mybatis.interceptor;
 
-import com.github.springframework.boot.commons.mybatis.handler.MybatisFieldHandlerWrapper;
+import com.github.springframework.boot.commons.mybatis.handler.MybatisInvocationHandler;
 import com.github.springframework.boot.commons.mybatis.handler.MybatisParameterFieldHandler;
-import com.github.springframework.boot.commons.mybatis.util.TableNameUtils;
+import com.github.springframework.boot.commons.mybatis.handler.ParameterInvocationHandler;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
@@ -22,7 +22,7 @@ public class MybatisParameterInterceptor implements Interceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(MybatisParameterInterceptor.class);
 
-    private final MybatisFieldHandlerWrapper fieldHandlerWrapper = new MybatisFieldHandlerWrapper();
+    private final MybatisInvocationHandler parameterHandler = new ParameterInvocationHandler();
 
     private final List<MybatisParameterFieldHandler> parameterFieldHandlerChain = new ArrayList<>();
 
@@ -32,16 +32,7 @@ public class MybatisParameterInterceptor implements Interceptor {
         MappedStatement statement = (MappedStatement) args[0];
         SqlCommandType sqlCommandType = statement.getSqlCommandType();
         if (sqlCommandType == SqlCommandType.INSERT || sqlCommandType == SqlCommandType.UPDATE) {
-            Object parameter = args[1];
-            String tableName = null;
-            try {
-                tableName = TableNameUtils.resolveExecutorTableName(invocation);
-                fieldHandlerWrapper.doHandle(parameterFieldHandlerChain, tableName, parameter);
-            } catch (Exception e) {
-                logger.error("Error occurred when {} is handling table '{}' with parameter type '{}'",
-                    getClass().getName(), tableName, parameter == null ? null : parameter.getClass().getName(), e
-                );
-            }
+            parameterHandler.preHandle(parameterFieldHandlerChain, invocation);
         }
         return invocation.proceed();
     }
@@ -59,7 +50,7 @@ public class MybatisParameterInterceptor implements Interceptor {
     public void registerParameterFieldHandler(MybatisParameterFieldHandler handler) {
         parameterFieldHandlerChain.add(handler);
         if (logger.isDebugEnabled()) {
-            logger.debug("{} has been successfully registered for {}", handler.getClass().getSimpleName(), getClass().getSimpleName());
+            logger.debug("{} has been successfully registered for {}", handler.getClass().getName(), getClass().getName());
         }
     }
 
