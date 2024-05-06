@@ -2,13 +2,12 @@ package com.github.springframework.boot.commons.mybatis.interceptor;
 
 import com.github.springframework.boot.commons.mybatis.handler.MybatisFieldHandler;
 import com.github.springframework.boot.commons.mybatis.util.FieldNameUtils;
+import org.apache.ibatis.binding.MapperMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class ParameterAndResultSetResolver {
@@ -33,7 +32,12 @@ class ParameterAndResultSetResolver {
 			if (logger.isDebugEnabled()) {
 				logger.debug("The map.values() is iterable for table '{}', use 'handleIterable' method to proceed", tableName);
 			}
-			resolveIterable(handler, tableName, map.values());
+			// If the map instanceof org.apache.ibatis.binding.MapperMethod.ParamMap, there could be
+			// multiple same values but with different keys in the map, so we need to get distinct
+			// values to avoid duplicate handling.
+			final boolean isMybatisParamMap = map instanceof MapperMethod.ParamMap;
+			Set<Object> distinctValues = Collections.singleton(map.values().iterator().next());
+			resolveIterable(handler, tableName, isMybatisParamMap ? distinctValues : map.values());
 		}
 		// If map instanceof Map<K, V>
 		else {
