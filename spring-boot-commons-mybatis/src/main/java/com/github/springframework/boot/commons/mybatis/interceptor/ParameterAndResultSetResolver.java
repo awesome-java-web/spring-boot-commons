@@ -44,10 +44,12 @@ class ParameterAndResultSetResolver {
 			Map<String, List<String>> targetTableFields = handler.targetTableFields();
 			List<String> tableFieldNames = FieldNameUtils.determineTargetFieldNames(targetTableFields, tableName);
 			if (logger.isDebugEnabled()) {
-				logger.debug("The map.values() is not iterable for table '{}', will be handled as typically Map<K,V> with target table fields {}",
+				logger.debug("The map.values() is not iterable for table '{}', will be handled as typical Map<K,V> with target table fields {}",
 					tableName, tableFieldNames
 				);
 			}
+
+			int tableFieldNameMatches = 0;
 			for (String tableFieldName : tableFieldNames) {
 				final String fieldCamelCaseName = FieldNameUtils.underscoreToCamelCase(tableFieldName);
 				// Do not use map.get() method directly here, because if the map instanceof
@@ -56,7 +58,14 @@ class ParameterAndResultSetResolver {
 					Object mapValue = map.get(fieldCamelCaseName);
 					Object handledValue = handler.handle(tableName, tableFieldName, mapValue);
 					map.put(fieldCamelCaseName, handledValue);
+					tableFieldNameMatches++;
 				}
+			}
+
+			// If no table field name matches, it means the map is not a typical table field map.
+			if (tableFieldNameMatches == 0) {
+				Object userDefinedObject = map.values().iterator().next();
+				resolveUserDefinedObject(handler, tableName, userDefinedObject);
 			}
 		}
 	}
