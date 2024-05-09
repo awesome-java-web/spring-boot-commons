@@ -57,23 +57,17 @@ public final class NumberUtils {
         return defaultIfNull(number, BigDecimal.ZERO);
     }
 
-    public static boolean isCurrencyAmount(final String number) {
+    public static boolean isCurrencyAmount(String number) {
         if (number == null || number.isEmpty()) {
             return false;
         }
 
-        String numberCopy = number;
-        if (number.charAt(0) == '+' || number.charAt(0) == '-') {
-            numberCopy = number.substring(1);
+        try {
+            new BigDecimal(number);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
-
-        char[] chars = numberCopy.toCharArray();
-        for (char c : chars) {
-            if (!Character.isDigit(c) && c != '.') {
-                return false;
-            }
-        }
-        return true;
     }
 
 }
