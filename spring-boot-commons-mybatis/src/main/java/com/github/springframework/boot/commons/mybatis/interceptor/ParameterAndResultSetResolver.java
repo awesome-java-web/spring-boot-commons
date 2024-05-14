@@ -2,12 +2,16 @@ package com.github.springframework.boot.commons.mybatis.interceptor;
 
 import com.github.springframework.boot.commons.mybatis.handler.MybatisFieldHandler;
 import com.github.springframework.boot.commons.mybatis.util.FieldNameUtils;
+import com.github.springframework.boot.commons.util.ObjectUtils;
 import org.apache.ibatis.binding.MapperMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 class ParameterAndResultSetResolver {
@@ -20,7 +24,7 @@ class ParameterAndResultSetResolver {
 			resolveMap(handler, tableName, (Map<String, Object>) value);
 		} else if (value instanceof Iterable) {
 			resolveIterable(handler, tableName, (Iterable<?>) value);
-		} else if (value != null && isNotPrimitiveOrWrapper(value)) {
+		} else if (value != null && ObjectUtils.isNotPrimitiveOrWrapper(value)) {
 			resolveUserDefinedObject(handler, tableName, value);
 		}
 	}
@@ -83,7 +87,7 @@ class ParameterAndResultSetResolver {
 					logger.debug("Ths inner element is instance of Iterable, use 'handleIterable' method to proceed");
 				}
 				resolveIterable(handler, tableName, (Iterable<?>) element);
-			} else if (element != null && isNotPrimitiveOrWrapper(element)) {
+			} else if (element != null && ObjectUtils.isNotPrimitiveOrWrapper(element)) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("The inner element is user defined Java object, use 'handleUserDefinedObject' method to proceed");
 				}
@@ -107,8 +111,8 @@ class ParameterAndResultSetResolver {
 			return;
 		}
 
-		Field[] javaFields = object.getClass().getDeclaredFields();
-		Map<String, Field> javaFieldMap = Arrays.stream(javaFields).collect(Collectors.toMap(Field::getName, field -> field));
+        List<Field> javaFields = ObjectUtils.getAllFields(object);
+        Map<String, Field> javaFieldMap = javaFields.stream().collect(Collectors.toMap(Field::getName, field -> field));
 		for (String tableFieldName : tableFieldNames) {
 			final String javaFieldName = FieldNameUtils.underscoreToCamelCase(tableFieldName);
 			Field javaField = javaFieldMap.get(javaFieldName);
@@ -123,13 +127,6 @@ class ParameterAndResultSetResolver {
 			Object handledValue = handler.handle(tableName, tableFieldName, javaFieldValue);
 			javaField.set(object, handledValue);
 		}
-	}
-
-	private boolean isNotPrimitiveOrWrapper(Object object) {
-		Class<?> clazz = object.getClass();
-		return !clazz.isPrimitive() && clazz != Boolean.class && clazz != Byte.class
-			&& clazz != Character.class && clazz != Short.class && clazz != Integer.class
-			&& clazz != Long.class && clazz != Float.class && clazz != Double.class;
 	}
 
 }

@@ -64,6 +64,11 @@
 			<artifactId>slf4j-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- spring-boot-commons-util -->
+		<dependency>
+			<groupId>io.github.awesome-java-web</groupId>
+			<artifactId>spring-boot-commons-util</artifactId>
+		</dependency>
 	</dependencies>
 
 	<distributionManagement>
