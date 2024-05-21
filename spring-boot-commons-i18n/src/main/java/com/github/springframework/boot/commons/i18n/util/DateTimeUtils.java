@@ -1,9 +1,6 @@
 package com.github.springframework.boot.commons.i18n.util;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
@@ -31,10 +28,10 @@ public final class DateTimeUtils {
         return zonedDateTime.withZoneSameInstant(targetZoneId).toLocalDateTime();
     }
 
-	public static LocalDate toLocalDate(final String date, DateTimeFormatter formatter, ZoneId targetZoneId) {
-		LocalDate localDate = LocalDate.parse(date, formatter);
-		return toLocalDate(localDate, targetZoneId);
-	}
+    public static LocalDate toLocalDate(final String date, DateTimeFormatter formatter, ZoneId targetZoneId) {
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        return toLocalDate(localDate, targetZoneId);
+    }
 
     public static LocalDate toLocalDate(LocalDate localDate, ZoneId targetZoneId) {
         ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
@@ -61,6 +58,13 @@ public final class DateTimeUtils {
         } catch (DateTimeParseException e) {
             return false;
         }
+    }
+
+    public static boolean isSameZone(ZoneId zoneId, ZoneId anotherZoneId) {
+        LocalDateTime now = LocalDateTime.now();
+        Instant instant = now.atZone(zoneId).toInstant();
+        Instant anotherInstant = now.atZone(anotherZoneId).toInstant();
+        return instant.equals(anotherInstant);
     }
 
 }

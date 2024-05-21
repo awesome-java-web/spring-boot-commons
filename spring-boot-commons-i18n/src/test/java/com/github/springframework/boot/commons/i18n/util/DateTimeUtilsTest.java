@@ -81,4 +81,17 @@ class DateTimeUtilsTest {
         assertEquals(expected, DateTimeUtils.isParseableLocalDate(date));
     }
 
+    @ParameterizedTest
+    @CsvSource({
+        "UTC+7, Asia/Jakarta, true",
+        "UTC+8, Asia/Jakarta, false",
+        "UTC+8, Asia/Makassar, true",
+        "UTC+9, Asia/Makassar, false",
+        "UTC+8, Asia/Ujung_Pandang, true",
+        "UTC+9, Asia/Ujung_Pandang, false"
+    })
+    void testIsSameZone(String zoneId, String anotherZoneId, boolean expected) {
+        assertEquals(expected, DateTimeUtils.isSameZone(ZoneId.of(zoneId), ZoneId.of(anotherZoneId)));
+    }
+
 }
