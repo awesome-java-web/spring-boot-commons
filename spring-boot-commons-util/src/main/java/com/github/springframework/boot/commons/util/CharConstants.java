@@ -10,6 +10,8 @@ public enum CharConstants {
 
     COMMA(','),
 
+    UNDERLINE('_'),
+
     ;
 
     private final char charValue;
