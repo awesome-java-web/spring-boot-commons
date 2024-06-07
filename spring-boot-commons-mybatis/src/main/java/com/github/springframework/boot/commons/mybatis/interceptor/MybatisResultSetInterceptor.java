@@ -12,9 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @Intercepts(@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class}))
 public class MybatisResultSetInterceptor implements Interceptor {
@@ -28,14 +26,16 @@ public class MybatisResultSetInterceptor implements Interceptor {
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
 		List<?> resultList = (List<?>) invocation.proceed();
-		String tableName = null;
+		Set<String> tableNames = new HashSet<>();
 		try {
-			tableName = TableNameUtils.resolveResultSetTableName(invocation);
+			tableNames.addAll(TableNameUtils.resolveResultSetTableName(invocation));
 			for (MybatisFieldHandler handler : resultSetFieldHandlerChain) {
-				resultSetResolver.resolve(handler, tableName, resultList);
+				for (String tableName : tableNames) {
+					resultSetResolver.resolve(handler, tableName, resultList);
+				}
 			}
 		} catch (Exception e) {
-			logger.error("Error occurred when {} is handling table '{}' with result '{}'", getClass().getName(), tableName, resultList, e);
+			logger.error("Error occurred when {} is handling table '{}' with result '{}'", getClass().getName(), tableNames, resultList, e);
 		}
 		return resultList;
 	}

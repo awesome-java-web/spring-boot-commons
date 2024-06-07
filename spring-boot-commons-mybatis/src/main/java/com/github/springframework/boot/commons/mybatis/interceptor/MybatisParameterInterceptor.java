@@ -13,9 +13,7 @@ import org.apache.ibatis.plugin.Signature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @Intercepts(@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}))
 public class MybatisParameterInterceptor implements Interceptor {
@@ -32,15 +30,17 @@ public class MybatisParameterInterceptor implements Interceptor {
 		MappedStatement statement = (MappedStatement) args[0];
 		SqlCommandType sqlCommandType = statement.getSqlCommandType();
 		if (sqlCommandType == SqlCommandType.INSERT || sqlCommandType == SqlCommandType.UPDATE) {
-			String tableName = null;
 			Object parameter = args[1];
+			Set<String> tableNames = new HashSet<>();
 			try {
-				tableName = TableNameUtils.resolveExecutorTableName(invocation);
+				tableNames.addAll(TableNameUtils.resolveExecutorTableName(invocation));
 				for (MybatisFieldHandler handler : parameterFieldHandlerChain) {
-					parameterResolver.resolve(handler, tableName, parameter);
+					for (String tableName : tableNames) {
+						parameterResolver.resolve(handler, tableName, parameter);
+					}
 				}
 			} catch (Exception e) {
-				logger.error("Error occurred when {} is handling table '{}' with parameter '{}'", getClass().getName(), tableName, parameter, e);
+				logger.error("Error occurred when {} is handling table '{}' with parameter '{}'", getClass().getName(), tableNames, parameter, e);
 			}
 		}
 		return invocation.proceed();
