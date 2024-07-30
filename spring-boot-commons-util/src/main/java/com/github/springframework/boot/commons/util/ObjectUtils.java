@@ -13,15 +13,16 @@ public final class ObjectUtils {
 
     public static boolean isNotPrimitiveOrWrapper(Object object) {
         Class<?> clazz = object.getClass();
-        return !clazz.isPrimitive() && clazz != Boolean.class && clazz != Byte.class
-            && clazz != Character.class && clazz != Short.class && clazz != Integer.class
-            && clazz != Long.class && clazz != Float.class && clazz != Double.class;
+        return clazz != Boolean.class && clazz != Byte.class
+            && clazz != Character.class && clazz != Short.class
+            && clazz != Integer.class && clazz != Long.class
+            && clazz != Float.class && clazz != Double.class;
     }
 
     public static List<Field> getAllFields(Object object) {
         List<Field> allFields = new ArrayList<>();
         Class<?> searchClass = object.getClass();
-        while (searchClass != Object.class && searchClass != null) {
+        while (searchClass != Object.class) {
             Field[] declaredFields = searchClass.getDeclaredFields();
             allFields.addAll(Arrays.asList(declaredFields));
             searchClass = searchClass.getSuperclass();
