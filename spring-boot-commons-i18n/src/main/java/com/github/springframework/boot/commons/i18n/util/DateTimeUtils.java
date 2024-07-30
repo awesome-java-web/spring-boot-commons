@@ -67,4 +67,36 @@ public final class DateTimeUtils {
         return instant.equals(anotherInstant);
     }
 
+    public static LocalDateTime max(LocalDateTime... datetime) {
+        LocalDateTime max = datetime[0];
+        for (LocalDateTime dt : datetime) {
+            max = dt.isAfter(max) ? dt : max;
+        }
+        return max;
+    }
+
+    public static LocalDateTime min(LocalDateTime... datetime) {
+        LocalDateTime min = datetime[0];
+        for (LocalDateTime dt : datetime) {
+            min = dt.isBefore(min) ? dt : min;
+        }
+        return min;
+    }
+
+    public static LocalDate max(LocalDate... date) {
+        LocalDate max = date[0];
+        for (LocalDate dt : date) {
+            max = dt.isAfter(max) ? dt : max;
+        }
+        return max;
+    }
+
+    public static LocalDate min(LocalDate... date) {
+        LocalDate min = date[0];
+        for (LocalDate dt : date) {
+            min = dt.isBefore(min) ? dt : min;
+        }
+        return min;
+    }
+
 }
