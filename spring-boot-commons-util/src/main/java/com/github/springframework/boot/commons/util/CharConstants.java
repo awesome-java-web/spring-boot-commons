@@ -12,6 +12,8 @@ public enum CharConstants {
 
     UNDERLINE('_'),
 
+    PERCENT('%'),
+
     ;
 
     private final char charValue;
