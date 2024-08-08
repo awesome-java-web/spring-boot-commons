@@ -70,18 +70,4 @@ public final class NumberUtils {
         }
     }
 
-    public static String rightTrimDecimalZero(String number) {
-        if (isCurrencyAmount(number)) {
-            final String empty = "";
-            final String tailZero = "0*$";
-            final String tailDot = "\\.$";
-            return number.replaceAll(tailZero, empty).replaceAll(tailDot, empty);
-        }
-        return number;
-    }
-
-    public static String rightTrimDecimalZero(Double number) {
-        return rightTrimDecimalZero(Double.toString(number));
-    }
-
 }

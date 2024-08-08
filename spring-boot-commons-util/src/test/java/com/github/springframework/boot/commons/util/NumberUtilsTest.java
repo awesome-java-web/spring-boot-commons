@@ -7,7 +7,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class NumberUtilsTest {
 
@@ -96,18 +97,6 @@ class NumberUtilsTest {
     })
     void testIsCurrencyAmount(String number, boolean expected) {
         assertEquals(expected, NumberUtils.isCurrencyAmount(number));
-    }
-
-    @ParameterizedTest
-    @CsvSource({"1.00, 1", "1.20, 1.2", "1.23, 1.23", "1.234, 1.234", "1.200, 1.2", "0.001, 0.001", "0.00, 0"})
-    void testRightTrimDecimalZero(Double number, String expected) {
-        assertEquals(expected, NumberUtils.rightTrimDecimalZero(number));
-    }
-
-    @Test
-    void testRightTrimDecimalZero() {
-        assertNull(NumberUtils.rightTrimDecimalZero((String) null));
-        assertEquals("number", NumberUtils.rightTrimDecimalZero("number"));
     }
 
 }
