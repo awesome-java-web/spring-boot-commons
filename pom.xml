@@ -7,7 +7,7 @@
 
 	<groupId>io.github.awesome-java-web</groupId>
 	<artifactId>spring-boot-commons</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Spring Boot Commons</name>
