@@ -1,6 +1,6 @@
 package com.github.springframework.boot.commons.util;
 
-public enum CharConstants {
+public enum Chars {
 
     AT('@'),
 
@@ -20,7 +20,7 @@ public enum CharConstants {
 
     private final String stringValue;
 
-    CharConstants(char charValue) {
+    Chars(char charValue) {
         this.charValue = charValue;
         this.stringValue = String.valueOf(charValue);
     }

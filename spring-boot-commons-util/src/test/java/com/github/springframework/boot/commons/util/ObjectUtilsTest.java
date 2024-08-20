@@ -23,7 +23,7 @@ class ObjectUtilsTest {
         // false
         assertFalse(ObjectUtils.isNotPrimitiveOrWrapper(true));
         assertFalse(ObjectUtils.isNotPrimitiveOrWrapper((byte) 0));
-        assertFalse(ObjectUtils.isNotPrimitiveOrWrapper(CharConstants.AT.charValue()));
+        assertFalse(ObjectUtils.isNotPrimitiveOrWrapper(Chars.AT.charValue()));
         assertFalse(ObjectUtils.isNotPrimitiveOrWrapper((short) 0));
         assertFalse(ObjectUtils.isNotPrimitiveOrWrapper(0));
         assertFalse(ObjectUtils.isNotPrimitiveOrWrapper(0L));
