@@ -8,4 +8,8 @@ public final class Strings {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
+    public static String defaultIfNull(Object value, String defaultValue) {
+        return value == null ? defaultValue : value.toString();
+    }
+
 }
