@@ -9,11 +9,15 @@ public final class SafeMapReader {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
-    public static <K> String emptyStringIfAbsent(Map<K, Object> map, K key) {
-        return (map == null || key == null) ? Strings.EMPTY : map.getOrDefault(key, Strings.EMPTY).toString();
+    public static <K, V> String getOrEmptyString(Map<K, V> map, K key) {
+        if (map == null || key == null) {
+            return Strings.EMPTY;
+        }
+        V value = map.get(key);
+        return value == null ? Strings.EMPTY : value.toString();
     }
 
-    public static <K> BigDecimal zeroBigDecimalIfAbsent(Map<K, BigDecimal> map, K key) {
+    public static <K> BigDecimal getOrBigDecimalZero(Map<K, BigDecimal> map, K key) {
         return (map == null || key == null) ? BigDecimal.ZERO : map.getOrDefault(key, BigDecimal.ZERO);
     }
 
