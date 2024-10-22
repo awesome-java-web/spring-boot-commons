@@ -12,7 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 class ParameterAndResultSetResolver {
 
@@ -112,7 +113,7 @@ class ParameterAndResultSetResolver {
 		}
 
         List<Field> javaFields = ObjectUtils.getAllFields(object);
-        Map<String, Field> javaFieldMap = javaFields.stream().collect(Collectors.toMap(Field::getName, field -> field));
+		Map<String, Field> javaFieldMap = javaFields.stream().collect(toMap(Field::getName, field -> field, (existing, replacement) -> existing));
 		for (String tableFieldName : tableFieldNames) {
 			final String javaFieldName = FieldNameUtils.underscoreToCamelCase(tableFieldName);
 			Field javaField = javaFieldMap.get(javaFieldName);
