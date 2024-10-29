@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>io.github.awesome-java-web</groupId>
+	<artifactId>spring-boot-commons</artifactId>
+	<version>1.0.5-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Spring Boot Commons</name>
+	<url>https://github.com/awesome-java-web/spring-boot-commons</url>
+	<description>Spring Boot Commons is a collection of common utilities and components for Spring Boot Web Applications</description>
+
+	<organization>
+		<name>Awesome Java Web</name>
+		<url>https://github.com/awesome-java-web</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/license/mit</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>codeboyzhou</name>
+			<email>imzhouchen@gmail.com</email>
+			<organization>Awesome Java Web</organization>
+			<organizationUrl>https://github.com/awesome-java-web</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/awesome-java-web/spring-boot-commons</url>
+		<connection>scm:git:git://github.com/awesome-java-web/spring-boot-commons.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/awesome-java-web/spring-boot-commons.git</developerConnection>
+	</scm>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/awesome-java-web/spring-boot-commons/issues</url>
+	</issueManagement>
+
+	<modules>
+		<module>spring-boot-commons-all</module>
+		<module>spring-boot-commons-mail</module>
+		<module>spring-boot-commons-i18n</module>
+		<module>spring-boot-commons-mybatis</module>
+		<module>spring-boot-commons-retry</module>
+		<module>spring-boot-commons-scripting</module>
+		<module>spring-boot-commons-util</module>
+	</modules>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!--======================== dependencies version management =======================-->
+		<jetbrains-annotations.version>24.1.0</jetbrains-annotations.version>
+		<junit5.version>5.10.2</junit5.version>
+		<mockito.version>4.11.0</mockito.version>
+		<slf4j-api.version>2.0.12</slf4j-api.version>
+		<mybatis.version>3.5.15</mybatis.version>
+		<groovy.version>4.0.6</groovy.version>
+		<groovy-sandbox.version>1.19</groovy-sandbox.version>
+		<caffeine.version>2.9.3</caffeine.version>
+		<guava.version>32.1.3-jre</guava.version>
+		<spring-boot.version>2.7.18</spring-boot.version>
+		<!--============================ plugins version management ========================-->
+		<maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
+		<maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
+		<maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+		<maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+	</properties>
+
+	<!--======================== common dependencies for all internal modules ==========================-->
+
+	<dependencies>
+		<!-- jetbrains-annotations -->
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>${jetbrains-annotations.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- junit5 -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit5.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-inline</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--======================== internal module dependencies management =======================-->
+
+			<!-- spring-boot-commons-retry -->
+			<dependency>
+				<groupId>io.github.awesome-java-web</groupId>
+				<artifactId>spring-boot-commons-retry</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- spring-boot-commons-util -->
+			<dependency>
+				<groupId>io.github.awesome-java-web</groupId>
+				<artifactId>spring-boot-commons-util</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!--======================== 3rd open source dependencies management =======================-->
+
+			<!-- slf4j-api -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j-api.version}</version>
+			</dependency>
+			<!-- mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+            <!-- groovy -->
+            <dependency>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+			<!-- groovy-sandbox -->
+			<dependency>
+				<groupId>org.kohsuke</groupId>
+				<artifactId>groovy-sandbox</artifactId>
+				<version>${groovy-sandbox.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- caffeine -->
+			<dependency>
+				<groupId>com.github.ben-manes.caffeine</groupId>
+				<artifactId>caffeine</artifactId>
+				<version>${caffeine.version}</version>
+			</dependency>
+			<!-- guava -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<!-- spring-boot-autoconfigure -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-autoconfigure</artifactId>
+				<version>${spring-boot.version}</version>
+			</dependency>
+			<!-- spring-boot-starter-mail -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-mail</artifactId>
+				<version>${spring-boot.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<!-- generate source code jar file -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- generate javadoc jar file -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- run unit tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<configuration>
+					<!--suppress UnresolvedMavenProperty for IntelliJ IDEA -->
+					<argLine>${jacoco.agent.argLine}</argLine>
+				</configuration>
+			</plugin>
+			<!-- generate unit test report -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<propertyName>jacoco.agent.argLine</propertyName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- nexus staging plugin for jar release -->
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>${nexus-staging-maven-plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+			<!-- gpg plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>${maven-gpg-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+	</distributionManagement>
+
+</project>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.awesome-java-web</groupId>
+        <artifactId>spring-boot-commons</artifactId>
+        <version>1.0.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>spring-boot-commons-scripting</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Spring Boot Commons Scripting</name>
+    <description>Spring Boot Commons Scripting</description>
+    <url>https://github.com/awesome-java-web/spring-boot-commons</url>
+
+    <organization>
+        <name>Awesome Java Web</name>
+        <url>https://github.com/awesome-java-web</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/license/mit</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>codeboyzhou</name>
+            <email>imzhouchen@gmail.com</email>
+            <organization>Awesome Java Web</organization>
+            <organizationUrl>https://github.com/awesome-java-web</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/awesome-java-web/spring-boot-commons</url>
+        <connection>scm:git:git://github.com/awesome-java-web/spring-boot-commons.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/awesome-java-web/spring-boot-commons.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/awesome-java-web/spring-boot-commons/issues</url>
+    </issueManagement>
+
+    <dependencies>
+        <!-- groovy -->
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+        </dependency>
+        <!-- groovy-sandbox -->
+        <dependency>
+            <groupId>org.kohsuke</groupId>
+            <artifactId>groovy-sandbox</artifactId>
+        </dependency>
+        <!-- spring-boot-commons-util -->
+        <dependency>
+            <groupId>io.github.awesome-java-web</groupId>
+            <artifactId>spring-boot-commons-util</artifactId>
+        </dependency>
+        <!-- caffeine -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
+
+</project>
