@@ -88,6 +88,12 @@
             <artifactId>spring-boot-commons-util</artifactId>
             <version>${project.version}</version>
         </dependency>
+		<!-- spring-boot-commons-web -->
+		<dependency>
+			<groupId>io.github.awesome-java-web</groupId>
+			<artifactId>spring-boot-commons-web</artifactId>
+			<version>${project.version}</version>
+		</dependency>
     </dependencies>
 
 	<build>

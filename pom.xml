@@ -55,6 +55,7 @@
 		<module>spring-boot-commons-retry</module>
 		<module>spring-boot-commons-scripting</module>
 		<module>spring-boot-commons-util</module>
+		<module>spring-boot-commons-web</module>
 	</modules>
 
 	<properties>
@@ -176,10 +177,22 @@
 				<artifactId>spring-boot-autoconfigure</artifactId>
 				<version>${spring-boot.version}</version>
 			</dependency>
+			<!-- spring-boot-starter-web -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<version>${spring-boot.version}</version>
+			</dependency>
 			<!-- spring-boot-starter-mail -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-mail</artifactId>
+				<version>${spring-boot.version}</version>
+			</dependency>
+			<!-- spring-boot-starter-data-redis -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-redis</artifactId>
 				<version>${spring-boot.version}</version>
 			</dependency>
 		</dependencies>
