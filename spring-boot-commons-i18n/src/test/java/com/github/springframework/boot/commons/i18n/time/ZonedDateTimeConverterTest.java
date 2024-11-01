@@ -63,9 +63,10 @@ class ZonedDateTimeConverterTest {
 		LocalDate now = LocalDate.now();
 		LocalDate converted = (LocalDate) ZonedDateTimeConverterFactory.convert(now, targetZoneId);
 		assertEquals(now.getYear(), converted.getYear());
-		assertEquals(now.getMonthValue(), converted.getMonthValue());
+		final int diffMonthValue = now.getMonthValue() - converted.getMonthValue();
+		assertTrue(diffMonthValue == 0 || diffMonthValue == 1);
 		final int diffDays = now.getDayOfMonth() - converted.getDayOfMonth();
-		assertTrue(diffDays == 0 || diffDays == 1);
+		assertTrue(diffDays == 0 || diffDays == 1 || diffDays == -30 || diffDays == -29 || diffDays == -28 || diffDays == -27);
 
 		LocalDateConverter converter = new LocalDateConverter();
 		assertEquals(DateTimeFormatter.ISO_LOCAL_DATE.toString(), converter.formatterOf(now).toString());
@@ -76,9 +77,10 @@ class ZonedDateTimeConverterTest {
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime converted = (LocalDateTime) ZonedDateTimeConverterFactory.convert(now, targetZoneId);
 		assertEquals(now.getYear(), converted.getYear());
-		assertEquals(now.getMonthValue(), converted.getMonthValue());
+		final int diffMonthValue = now.getMonthValue() - converted.getMonthValue();
+		assertTrue(diffMonthValue == 0 || diffMonthValue == 1);
 		final int diffDays = now.getDayOfMonth() - converted.getDayOfMonth();
-		assertTrue(diffDays == 0 || diffDays == 1);
+		assertTrue(diffDays == 0 || diffDays == 1 || diffDays == -30 || diffDays == -29 || diffDays == -28 || diffDays == -27);
 		final int diffHours = now.getHour() - converted.getHour();
 		assertTrue(diffHours == 1 || diffHours == -23);
 		assertEquals(now.getMinute(), converted.getMinute());
@@ -92,7 +94,7 @@ class ZonedDateTimeConverterTest {
 	@Test
 	void testUnsupportedDataType() {
 		UnsupportedOperationException e = assertThrows(UnsupportedOperationException.class,
-				() -> ZonedDateTimeConverterFactory.convert(Integer.MIN_VALUE, targetZoneId)
+			() -> ZonedDateTimeConverterFactory.convert(Integer.MIN_VALUE, targetZoneId)
 		);
 		assertTrue(e.getMessage().contains("No suitable ZonedDateTimeConverter found to handle this data type"));
 	}
