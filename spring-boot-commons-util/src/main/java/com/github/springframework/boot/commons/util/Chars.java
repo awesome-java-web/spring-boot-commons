@@ -4,11 +4,15 @@ public enum Chars {
 
     AT('@'),
 
+	AND('&'),
+
     DOT('.'),
 
     DASH('-'),
 
     COMMA(','),
+
+	EQUAL('='),
 
     UNDERLINE('_'),
 
