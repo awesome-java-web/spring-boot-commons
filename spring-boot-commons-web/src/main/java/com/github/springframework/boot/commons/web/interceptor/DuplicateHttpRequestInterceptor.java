@@ -1,8 +1,10 @@
 package com.github.springframework.boot.commons.web.interceptor;
 
 import com.github.springframework.boot.commons.util.Chars;
+import com.github.springframework.boot.commons.util.RedisTemplateHelper;
 import com.github.springframework.boot.commons.web.annotation.DuplicateRequestConstraint;
 import com.github.springframework.boot.commons.web.enums.DuplicateRequestConstraintKeySource;
+import com.github.springframework.boot.commons.web.exception.DuplicateHttpRequestInterceptorException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +16,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
 
 public class DuplicateHttpRequestInterceptor implements HandlerInterceptor {
 
@@ -36,27 +37,31 @@ public class DuplicateHttpRequestInterceptor implements HandlerInterceptor {
 
 			final String expectedParameter = annotation.parameter();
 			if (expectedParameter == null || expectedParameter.trim().isEmpty()) {
-				return true;
+				throw new DuplicateHttpRequestInterceptorException("Invalid parameter value for DuplicateRequestConstraint annotation: null or empty");
 			}
 
 			final String requestId = parseRequestId(request, annotation);
 			if (requestId == null) {
-				return true;
+				throw new DuplicateHttpRequestInterceptorException("Invalid requestId value for DuplicateRequestConstraint annotation: null");
 			}
 
 			final long duration = annotation.duration();
-			TimeUnit unit = annotation.unit();
-			final String requestURI = request.getRequestURI();
-			final String requestIdCacheKey = requestURI + Chars.DASH.stringValue() + requestId;
-			final String requestArrivalTime = String.valueOf(System.currentTimeMillis());
-			final Boolean ok = stringRedisTemplate.opsForValue().setIfAbsent(requestIdCacheKey, requestArrivalTime);
-			if (Boolean.TRUE.equals(ok)) {
-				stringRedisTemplate.expire(requestIdCacheKey, duration, unit);
+			if (duration <= 0) {
+				throw new DuplicateHttpRequestInterceptorException("Invalid duration value for DuplicateRequestConstraint annotation: " + duration);
+			}
+
+			final String key = request.getRequestURI() + Chars.DASH.stringValue() + requestId;
+			final String value = Long.toString(System.currentTimeMillis());
+			try {
+				final boolean success = RedisTemplateHelper.setIfAbsent(stringRedisTemplate, key, value, duration, annotation.unit());
+				if (!success) {
+					logger.warn("Duplicate HTTP request '{}' received in a short period, subsequent requests will be ignored during this time", key);
+					return false;
+				}
+			} catch (Exception e) {
+				// 如果出现Redis连接异常，就临时降级，不进行重复请求校验，防止原本正常的请求被误拦截
+				logger.error("Failed to execute Redis command, will skip duplicate request constraint validation temporarily", e);
 				return true;
-			} else {
-				final String log = "Duplicate http request received in {} {}: {}, the later requests will be ignored during this period";
-				logger.warn(log, duration, unit.name().toLowerCase(), requestIdCacheKey);
-				return false;
 			}
 		}
 		return true;
