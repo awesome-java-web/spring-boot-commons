@@ -1,11 +1,11 @@
 package com.github.springframework.boot.commons.mail;
 
-import com.github.springframework.boot.commons.retry.RetryPolicy;
+import com.github.springframework.boot.commons.retry.RetryHandler;
 
 public interface EmailSender {
 
-	void send(Email email);
+	boolean send(Email email);
 
-	void setRetryPolicy(RetryPolicy retryPolicy);
+	void setRetryHandler(RetryHandler retryHandler);
 
 }
