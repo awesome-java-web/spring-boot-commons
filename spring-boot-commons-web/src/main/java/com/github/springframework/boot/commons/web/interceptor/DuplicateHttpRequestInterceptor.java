@@ -48,10 +48,10 @@ public class DuplicateHttpRequestInterceptor implements HandlerInterceptor {
 			TimeUnit unit = annotation.unit();
 			final String requestURI = request.getRequestURI();
 			final String requestIdCacheKey = requestURI + Chars.DASH.stringValue() + requestId;
-			final String cachedRequestId = stringRedisTemplate.opsForValue().get(requestIdCacheKey);
-			if (cachedRequestId == null) {
-				final String requestArrivalTime = String.valueOf(System.currentTimeMillis());
-				stringRedisTemplate.opsForValue().set(requestIdCacheKey, requestArrivalTime, duration, unit);
+			final String requestArrivalTime = String.valueOf(System.currentTimeMillis());
+			final Boolean ok = stringRedisTemplate.opsForValue().setIfAbsent(requestIdCacheKey, requestArrivalTime);
+			if (Boolean.TRUE.equals(ok)) {
+				stringRedisTemplate.expire(requestIdCacheKey, duration, unit);
 				return true;
 			} else {
 				final String log = "Duplicate http request received in {} {}: {}, the later requests will be ignored during this period";
