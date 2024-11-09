@@ -12,6 +12,11 @@ public abstract class AbstractRetryHandler implements RetryHandler {
 
 	public abstract long getInterval();
 
+	public RetryHandler withMaxAttempts(int maxAttempts) {
+		this.maxAttempts = maxAttempts;
+		return this;
+	}
+
 	@Override
 	public void retry(RetryCallback callback) {
 		while (attempts.get() < maxAttempts) {

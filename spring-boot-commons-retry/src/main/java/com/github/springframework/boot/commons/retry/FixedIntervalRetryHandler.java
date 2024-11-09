@@ -17,11 +17,6 @@ public class FixedIntervalRetryHandler extends AbstractRetryHandler {
 		return this;
 	}
 
-	public FixedIntervalRetryHandler withMaxAttempts(int maxAttempts) {
-		this.maxAttempts = maxAttempts;
-		return this;
-	}
-
 	FixedIntervalRetryHandler() {
 		this.interval = DEFAULT_INTERVAL;
 	}

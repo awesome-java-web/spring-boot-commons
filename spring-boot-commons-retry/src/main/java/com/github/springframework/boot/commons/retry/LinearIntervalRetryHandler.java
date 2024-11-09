@@ -35,12 +35,7 @@ public class LinearIntervalRetryHandler extends AbstractRetryHandler {
 		return this;
 	}
 
-	public LinearIntervalRetryHandler withMaxAttempts(int maxAttempts) {
-		this.maxAttempts = maxAttempts;
-		return this;
-	}
-
-	public LinearIntervalRetryHandler() {
+	LinearIntervalRetryHandler() {
 		this.initialInterval = DEFAULT_INITIAL_INTERVAL;
 		this.initialStep = DEFAULT_INTERVAL_STEP;
 		this.maxInterval = DEFAULT_MAX_INTERVAL;

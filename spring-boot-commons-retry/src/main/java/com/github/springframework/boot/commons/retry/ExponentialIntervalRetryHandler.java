@@ -16,22 +16,17 @@ public class ExponentialIntervalRetryHandler extends AbstractRetryHandler {
 		return new ExponentialIntervalRetryHandler();
 	}
 
-	public ExponentialIntervalRetryHandler withInitialInterval(long initialInterval){
+	public ExponentialIntervalRetryHandler withInitialInterval(long initialInterval) {
 		this.initialInterval = initialInterval;
 		return this;
 	}
 
-	public ExponentialIntervalRetryHandler withMaxInterval(long maxInterval){
+	public ExponentialIntervalRetryHandler withMaxInterval(long maxInterval) {
 		this.maxInterval = maxInterval;
 		return this;
 	}
 
-	public ExponentialIntervalRetryHandler withMaxAttempts(int maxAttempts) {
-		this.maxAttempts = maxAttempts;
-		return this;
-	}
-
-	public ExponentialIntervalRetryHandler() {
+	ExponentialIntervalRetryHandler() {
 		this.initialInterval = DEFAULT_INITIAL_INTERVAL;
 		this.maxInterval = DEFAULT_MAX_INTERVAL;
 	}

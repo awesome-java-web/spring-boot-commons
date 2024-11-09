@@ -20,12 +20,7 @@ public class FixedRandomIntervalRetryHandler extends AbstractRetryHandler {
 		return this;
 	}
 
-	public FixedRandomIntervalRetryHandler withMaxAttempts(int maxAttempts) {
-		this.maxAttempts = maxAttempts;
-		return this;
-	}
-
-	public FixedRandomIntervalRetryHandler() {
+	FixedRandomIntervalRetryHandler() {
 		this.maxInterval = DEFAULT_MAX_INTERVAL;
 	}
 
