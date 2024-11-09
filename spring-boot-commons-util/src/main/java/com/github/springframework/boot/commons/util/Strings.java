@@ -4,7 +4,7 @@ public final class Strings {
 
 	public static final String EMPTY = "";
 
-	private Strings() {
+	Strings() {
 		throw new UnsupportedOperationException("Utility class should not be instantiated");
 	}
 
