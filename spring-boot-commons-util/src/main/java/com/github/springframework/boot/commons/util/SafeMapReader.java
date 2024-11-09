@@ -5,7 +5,7 @@ import java.util.Map;
 
 public final class SafeMapReader {
 
-    private SafeMapReader() {
+    SafeMapReader() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
