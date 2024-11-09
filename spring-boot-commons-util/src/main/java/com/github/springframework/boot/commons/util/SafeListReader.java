@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class SafeListReader {
 
-    private SafeListReader() {
+    SafeListReader() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
