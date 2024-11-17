@@ -2,7 +2,7 @@ package com.github.springframework.boot.commons.mybatis.interceptor;
 
 import com.github.springframework.boot.commons.mybatis.handler.MybatisFieldHandler;
 import com.github.springframework.boot.commons.mybatis.util.FieldNameUtils;
-import com.github.springframework.boot.commons.util.base.Objects;
+import com.github.springframework.boot.commons.util.base.Classes;
 import org.apache.ibatis.binding.MapperMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ class ParameterAndResultSetResolver {
 			resolveMap(handler, tableName, (Map<String, Object>) value);
 		} else if (value instanceof Iterable) {
 			resolveIterable(handler, tableName, (Iterable<?>) value);
-		} else if (value != null && Objects.isNotPrimitiveOrWrapper(value)) {
+		} else if (isUserDefinedObject(value)) {
 			resolveUserDefinedObject(handler, tableName, value);
 		}
 	}
@@ -80,17 +80,17 @@ class ParameterAndResultSetResolver {
 		for (Object element : iterable) {
 			if (element instanceof Map) {
 				if (logger.isDebugEnabled()) {
-					logger.debug("Ths inner element is instance of Map, use 'handleMap' method to proceed");
+					logger.debug("Ths inner element is instance of Map, use 'resolveMap' method to proceed");
 				}
 				resolveMap(handler, tableName, (Map<String, Object>) element);
 			} else if (element instanceof Iterable) {
 				if (logger.isDebugEnabled()) {
-					logger.debug("Ths inner element is instance of Iterable, use 'handleIterable' method to proceed");
+					logger.debug("Ths inner element is instance of Iterable, use 'resolveIterable' method to proceed");
 				}
 				resolveIterable(handler, tableName, (Iterable<?>) element);
-			} else if (element != null && Objects.isNotPrimitiveOrWrapper(element)) {
+			} else if (isUserDefinedObject(element)) {
 				if (logger.isDebugEnabled()) {
-					logger.debug("The inner element is user defined Java object, use 'handleUserDefinedObject' method to proceed");
+					logger.debug("The inner element is user defined Java object, use 'resolveUserDefinedObject' method to proceed");
 				}
 				resolveUserDefinedObject(handler, tableName, element);
 			}
@@ -112,8 +112,10 @@ class ParameterAndResultSetResolver {
 			return;
 		}
 
-        List<Field> javaFields = Objects.getAllFields(object);
-		Map<String, Field> javaFieldMap = javaFields.stream().collect(toMap(Field::getName, field -> field, (existing, replacement) -> existing));
+		List<Field> javaFields = Classes.getAllFieldsOf(object.getClass());
+		Map<String, Field> javaFieldMap = javaFields.stream().collect(
+			toMap(Field::getName, field -> field, (existing, replacement) -> existing)
+		);
 		for (String tableFieldName : tableFieldNames) {
 			final String javaFieldName = FieldNameUtils.underscoreToCamelCase(tableFieldName);
 			Field javaField = javaFieldMap.get(javaFieldName);
@@ -128,6 +130,14 @@ class ParameterAndResultSetResolver {
 			Object handledValue = handler.handle(tableName, tableFieldName, javaFieldValue);
 			javaField.set(object, handledValue);
 		}
+	}
+
+	private static boolean isUserDefinedObject(Object object) {
+		if (object == null) {
+			return false;
+		}
+		final String packageName = object.getClass().getPackage().getName();
+		return !packageName.startsWith("java.") && !packageName.startsWith("javax.") && !packageName.startsWith("com.sun.");
 	}
 
 }

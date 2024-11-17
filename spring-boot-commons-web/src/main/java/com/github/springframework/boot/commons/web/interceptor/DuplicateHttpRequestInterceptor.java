@@ -1,6 +1,6 @@
 package com.github.springframework.boot.commons.web.interceptor;
 
-import com.github.springframework.boot.commons.util.base.Objects;
+import com.github.springframework.boot.commons.util.base.Classes;
 import com.github.springframework.boot.commons.web.annotation.DuplicateRequestConstraint;
 import com.github.springframework.boot.commons.web.exception.DuplicateRequestConstraintException;
 import com.github.springframework.boot.commons.web.request.DuplicateRequestConstraintStrategy;
@@ -25,7 +25,7 @@ public class DuplicateHttpRequestInterceptor implements HandlerInterceptor {
 				return true;
 			}
 
-			Object strategyObject = Objects.newInstanceOf(constraint.strategy());
+			Object strategyObject = Classes.newInstanceOf(constraint.strategy());
 			if (strategyObject == null) {
 				throw new DuplicateRequestConstraintException("Failed to create an instance of DuplicateRequestConstraintStrategy");
 			}
