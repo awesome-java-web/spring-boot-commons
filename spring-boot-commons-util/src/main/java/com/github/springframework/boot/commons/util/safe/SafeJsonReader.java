@@ -24,6 +24,14 @@ public final class SafeJsonReader {
 			return value == null ? EMPTY_JSON_OBJECT : value;
 		}
 
+		public static com.alibaba.fastjson.JSONObject getOrEmptyJsonObject(com.alibaba.fastjson.JSONArray json, final int index) {
+			if (json == null || json.isEmpty() || index < 0 || index >= json.size()) {
+				return EMPTY_JSON_OBJECT;
+			}
+			com.alibaba.fastjson.JSONObject value = json.getJSONObject(index);
+			return value == null ? EMPTY_JSON_OBJECT : value;
+		}
+
 		public static com.alibaba.fastjson.JSONArray getOrEmptyJsonArray(com.alibaba.fastjson.JSONObject json, @NotNull final String key) {
 			if (json == null) {
 				return new com.alibaba.fastjson.JSONArray();
