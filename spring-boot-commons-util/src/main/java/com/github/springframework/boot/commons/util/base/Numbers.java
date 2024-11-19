@@ -1,11 +1,11 @@
-package com.github.springframework.boot.commons.util;
+package com.github.springframework.boot.commons.util.base;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public final class NumberUtils {
+public final class Numbers {
 
-    NumberUtils() {
+    public Numbers() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 

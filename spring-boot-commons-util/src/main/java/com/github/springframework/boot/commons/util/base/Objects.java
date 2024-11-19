@@ -1,13 +1,13 @@
-package com.github.springframework.boot.commons.util;
+package com.github.springframework.boot.commons.util.base;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class ObjectUtils {
+public final class Objects {
 
-    ObjectUtils() {
+    public Objects() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 

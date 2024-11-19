@@ -2,7 +2,7 @@ package com.github.springframework.boot.commons.mybatis.interceptor;
 
 import com.github.springframework.boot.commons.mybatis.handler.MybatisFieldHandler;
 import com.github.springframework.boot.commons.mybatis.util.FieldNameUtils;
-import com.github.springframework.boot.commons.util.ObjectUtils;
+import com.github.springframework.boot.commons.util.base.Objects;
 import org.apache.ibatis.binding.MapperMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ class ParameterAndResultSetResolver {
 			resolveMap(handler, tableName, (Map<String, Object>) value);
 		} else if (value instanceof Iterable) {
 			resolveIterable(handler, tableName, (Iterable<?>) value);
-		} else if (value != null && ObjectUtils.isNotPrimitiveOrWrapper(value)) {
+		} else if (value != null && Objects.isNotPrimitiveOrWrapper(value)) {
 			resolveUserDefinedObject(handler, tableName, value);
 		}
 	}
@@ -88,7 +88,7 @@ class ParameterAndResultSetResolver {
 					logger.debug("Ths inner element is instance of Iterable, use 'handleIterable' method to proceed");
 				}
 				resolveIterable(handler, tableName, (Iterable<?>) element);
-			} else if (element != null && ObjectUtils.isNotPrimitiveOrWrapper(element)) {
+			} else if (element != null && Objects.isNotPrimitiveOrWrapper(element)) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("The inner element is user defined Java object, use 'handleUserDefinedObject' method to proceed");
 				}
@@ -112,7 +112,7 @@ class ParameterAndResultSetResolver {
 			return;
 		}
 
-        List<Field> javaFields = ObjectUtils.getAllFields(object);
+        List<Field> javaFields = Objects.getAllFields(object);
 		Map<String, Field> javaFieldMap = javaFields.stream().collect(toMap(Field::getName, field -> field, (existing, replacement) -> existing));
 		for (String tableFieldName : tableFieldNames) {
 			final String javaFieldName = FieldNameUtils.underscoreToCamelCase(tableFieldName);

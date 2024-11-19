@@ -4,7 +4,7 @@ import com.github.springframework.boot.commons.groovy.cache.LocalCacheManager;
 import com.github.springframework.boot.commons.groovy.exception.GroovyObjectInvokeMethodException;
 import com.github.springframework.boot.commons.groovy.exception.GroovyScriptParseException;
 import com.github.springframework.boot.commons.groovy.exception.InvalidGroovyScriptException;
-import com.github.springframework.boot.commons.util.MessageDigestUtils;
+import com.github.springframework.boot.commons.util.crypto.MessageDigests;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
 import groovy.lang.GroovyShell;
@@ -42,7 +42,7 @@ public class GroovyScriptExecutor {
         GroovyObject groovyObjectCache = this.getGroovyObjectCacheFromScript(classScript);
         if (groovyObjectCache == null) {
             final String trimmedScript = classScript.trim();
-            final String scriptCacheKey = MessageDigestUtils.md5Hex(trimmedScript);
+            final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
             groovyObjectCache = parseClassScript(trimmedScript);
             this.localCacheManager.put(scriptCacheKey, groovyObjectCache);
         }
@@ -56,7 +56,7 @@ public class GroovyScriptExecutor {
         GroovyObject groovyObjectCache = this.getGroovyObjectCacheFromScript(scriptText);
         if (groovyObjectCache == null) {
             final String trimmedScript = scriptText.trim();
-            final String scriptCacheKey = MessageDigestUtils.md5Hex(trimmedScript);
+            final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
             groovyObjectCache = parseScriptSnippet(trimmedScript);
             this.localCacheManager.put(scriptCacheKey, groovyObjectCache);
         }
@@ -75,7 +75,7 @@ public class GroovyScriptExecutor {
             throw new InvalidGroovyScriptException("Groovy script is empty");
         }
 
-        final String scriptCacheKey = MessageDigestUtils.md5Hex(trimmedScript);
+        final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
         return this.localCacheManager.getIfPresent(scriptCacheKey);
     }
 

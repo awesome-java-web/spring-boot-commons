@@ -1,7 +1,7 @@
 package com.github.springframework.boot.commons.web.interceptor;
 
-import com.github.springframework.boot.commons.util.Chars;
-import com.github.springframework.boot.commons.util.RedisTemplateHelper;
+import com.github.springframework.boot.commons.util.base.Chars;
+import com.github.springframework.boot.commons.util.spring.RedisTemplates;
 import com.github.springframework.boot.commons.web.annotation.DuplicateRequestConstraint;
 import com.github.springframework.boot.commons.web.enums.DuplicateRequestConstraintKeySource;
 import com.github.springframework.boot.commons.web.exception.DuplicateHttpRequestInterceptorException;
@@ -53,7 +53,7 @@ public class DuplicateHttpRequestInterceptor implements HandlerInterceptor {
 			final String key = request.getRequestURI() + Chars.DASH.stringValue() + requestId;
 			final String value = Long.toString(System.currentTimeMillis());
 			try {
-				final boolean success = RedisTemplateHelper.setIfAbsent(stringRedisTemplate, key, value, duration, annotation.unit());
+				final boolean success = RedisTemplates.setIfAbsent(stringRedisTemplate, key, value, duration, annotation.unit());
 				if (!success) {
 					logger.warn("Duplicate HTTP request '{}' received in a short period, subsequent requests will be ignored during this time", key);
 					return false;

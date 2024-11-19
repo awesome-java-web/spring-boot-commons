@@ -1,4 +1,4 @@
-package com.github.springframework.boot.commons.util;
+package com.github.springframework.boot.commons.util.spring;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -7,9 +7,9 @@ import org.springframework.data.redis.core.script.RedisScript;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-public final class RedisTemplateHelper {
+public final class RedisTemplates {
 
-	RedisTemplateHelper() {
+	public RedisTemplates() {
 		throw new UnsupportedOperationException("Utility class should not be instantiated");
 	}
 

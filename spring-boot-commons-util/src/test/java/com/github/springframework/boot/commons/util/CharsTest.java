@@ -1,5 +1,6 @@
 package com.github.springframework.boot.commons.util;
 
+import com.github.springframework.boot.commons.util.base.Chars;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

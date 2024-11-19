@@ -1,4 +1,4 @@
-package com.github.springframework.boot.commons.util;
+package com.github.springframework.boot.commons.util.base;
 
 public enum Chars {
 

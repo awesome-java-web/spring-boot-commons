@@ -1,6 +1,6 @@
 package com.github.springframework.boot.commons.mail;
 
-import com.github.springframework.boot.commons.util.Strings;
+import com.github.springframework.boot.commons.util.base.Strings;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.util.StringUtils;
 

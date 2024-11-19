@@ -1,5 +1,6 @@
 package com.github.springframework.boot.commons.util;
 
+import com.github.springframework.boot.commons.util.safe.SafeListReader;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -16,12 +17,12 @@ class SafeListReaderTest {
 	}
 
 	@Test
-	void testGetByIndex() {
+	void testSafeGetByIndex() {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
-		assertNull(SafeListReader.getByIndex(null, 0));
-		assertNull(SafeListReader.getByIndex(list, -1));
-		assertNull(SafeListReader.getByIndex(list, list.size()));
-		assertEquals(1, SafeListReader.getByIndex(list, 0));
+		assertNull(SafeListReader.safeGetByIndex(null, 0));
+		assertNull(SafeListReader.safeGetByIndex(list, -1));
+		assertNull(SafeListReader.safeGetByIndex(list, list.size()));
+		assertEquals(1, SafeListReader.safeGetByIndex(list, 0));
 	}
 
 }

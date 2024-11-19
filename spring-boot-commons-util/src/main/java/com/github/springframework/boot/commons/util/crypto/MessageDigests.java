@@ -1,14 +1,14 @@
-package com.github.springframework.boot.commons.util;
+package com.github.springframework.boot.commons.util.crypto;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public final class MessageDigestUtils {
+public final class MessageDigests {
 
     private static final String MESSAGE_DIGEST_ALGORITHM_MD5 = "MD5";
 
-    MessageDigestUtils() {
+    public MessageDigests() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 

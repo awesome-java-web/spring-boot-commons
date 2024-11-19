@@ -1,5 +1,6 @@
 package com.github.springframework.boot.commons.util;
 
+import com.github.springframework.boot.commons.util.crypto.MessageDigests;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mockStatic;
 
-class MessageDigestUtilsTest {
+class MessageDigestsTest {
 
 	@Test
 	void testNewInstance() {
-		UnsupportedOperationException e = assertThrows(UnsupportedOperationException.class, MessageDigestUtils::new);
+		UnsupportedOperationException e = assertThrows(UnsupportedOperationException.class, MessageDigests::new);
 		assertEquals("Utility class should not be instantiated", e.getMessage());
 	}
 
@@ -28,14 +29,14 @@ class MessageDigestUtilsTest {
 			"test md5Hex, 23d03bcab51446d6b9a50aaf26ebe666"
 	})
 	void testMd5Hex(String input, String expected) {
-		assertEquals(expected, MessageDigestUtils.md5Hex(input));
+		assertEquals(expected, MessageDigests.md5Hex(input));
 	}
 
 	@Test
 	void testNoSuchAlgorithmException() {
 		MockedStatic<MessageDigest> mockMessageDigest = mockStatic(MessageDigest.class);
 		mockMessageDigest.when(() -> MessageDigest.getInstance(anyString())).thenThrow(new NoSuchAlgorithmException());
-		assertEquals(0, MessageDigestUtils.md5(anyString()).length);
+		assertEquals(0, MessageDigests.md5(anyString()).length);
 		mockMessageDigest.close();
 	}
 
