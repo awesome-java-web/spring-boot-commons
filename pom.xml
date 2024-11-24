@@ -50,7 +50,6 @@
 	<modules>
 		<module>spring-boot-commons-all</module>
 		<module>spring-boot-commons-mail</module>
-		<module>spring-boot-commons-i18n</module>
 		<module>spring-boot-commons-mybatis</module>
 		<module>spring-boot-commons-retry</module>
 		<module>spring-boot-commons-scripting</module>

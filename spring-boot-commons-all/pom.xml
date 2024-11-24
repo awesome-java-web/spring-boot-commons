@@ -51,31 +51,60 @@
         <url>https://github.com/awesome-java-web/spring-boot-commons/issues</url>
     </issueManagement>
 
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <!-- generate aggregate unit test report -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/unit-test-reports</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
-        <!-- spring-boot-commons-i18n -->
+        <!-- spring-boot-commons-mail -->
         <dependency>
             <groupId>io.github.awesome-java-web</groupId>
-            <artifactId>spring-boot-commons-i18n</artifactId>
+            <artifactId>spring-boot-commons-mail</artifactId>
             <version>${project.version}</version>
         </dependency>
-		<!-- spring-boot-commons-mail -->
-		<dependency>
-			<groupId>io.github.awesome-java-web</groupId>
-			<artifactId>spring-boot-commons-mail</artifactId>
-			<version>${project.version}</version>
-		</dependency>
         <!-- spring-boot-commons-mybatis -->
         <dependency>
             <groupId>io.github.awesome-java-web</groupId>
             <artifactId>spring-boot-commons-mybatis</artifactId>
             <version>${project.version}</version>
         </dependency>
-		<!-- spring-boot-commons-retry -->
-		<dependency>
-			<groupId>io.github.awesome-java-web</groupId>
-			<artifactId>spring-boot-commons-retry</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+        <!-- spring-boot-commons-retry -->
+        <dependency>
+            <groupId>io.github.awesome-java-web</groupId>
+            <artifactId>spring-boot-commons-retry</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- spring-boot-commons-scripting -->
         <dependency>
             <groupId>io.github.awesome-java-web</groupId>
@@ -88,46 +117,12 @@
             <artifactId>spring-boot-commons-util</artifactId>
             <version>${project.version}</version>
         </dependency>
-		<!-- spring-boot-commons-web -->
-		<dependency>
-			<groupId>io.github.awesome-java-web</groupId>
-			<artifactId>spring-boot-commons-web</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+        <!-- spring-boot-commons-web -->
+        <dependency>
+            <groupId>io.github.awesome-java-web</groupId>
+            <artifactId>spring-boot-commons-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
-
-	<build>
-		<plugins>
-			<!-- generate aggregate unit test report -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report-aggregate</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/unit-test-reports</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
-        </repository>
-    </distributionManagement>
 
 </project>

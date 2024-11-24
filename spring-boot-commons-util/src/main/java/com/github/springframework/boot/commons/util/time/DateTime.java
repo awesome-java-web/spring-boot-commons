@@ -1,16 +1,49 @@
-package com.github.springframework.boot.commons.i18n.util;
+package com.github.springframework.boot.commons.util.time;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 
-public final class DateTimeUtils {
+public final class DateTime {
 
     public static final String DEFAULT_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    DateTimeUtils() {
+    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
+
+    public static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_PATTERN);
+
+    public DateTime() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
+    }
+
+    public static Object atZone(Object datetime, ZoneId targetZoneId) {
+        if (datetime == null || targetZoneId == null) {
+            throw new IllegalArgumentException("datetime or targetZoneId is null");
+        }
+
+        if (datetime instanceof Date) {
+            return toDate(toLocalDateTime((Date) datetime, targetZoneId));
+        }
+
+        if (datetime instanceof String) {
+            final String dt = datetime.toString();
+            final boolean isLocalDate = isParseableLocalDate(dt);
+            DateTimeFormatter formatter = isLocalDate ? DEFAULT_DATE_FORMATTER : DEFAULT_DATE_TIME_FORMATTER;
+            return isLocalDate
+                ? toLocalDate(dt, formatter, targetZoneId).format(formatter)
+                : toLocalDateTime(dt, formatter, targetZoneId).format(formatter);
+        }
+
+        if (datetime instanceof LocalDate) {
+            return toLocalDate((LocalDate) datetime, targetZoneId);
+        }
+
+        if (datetime instanceof LocalDateTime) {
+            return toLocalDateTime((LocalDateTime) datetime, targetZoneId);
+        }
+
+        throw new IllegalArgumentException("Unsupported type: " + datetime.getClass().getName());
     }
 
     public static LocalDateTime toLocalDateTime(final String datetime, DateTimeFormatter formatter, ZoneId targetZoneId) {

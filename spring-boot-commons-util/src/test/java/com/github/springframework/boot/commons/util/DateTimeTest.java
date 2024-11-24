@@ -1,5 +1,6 @@
-package com.github.springframework.boot.commons.i18n.util;
+package com.github.springframework.boot.commons.util;
 
+import com.github.springframework.boot.commons.util.time.DateTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +18,7 @@ import java.util.TimeZone;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class DateTimeUtilsTest {
+class DateTimeTest {
 
 	@BeforeAll
 	static void setup() {
@@ -26,7 +27,7 @@ class DateTimeUtilsTest {
 
 	@Test
 	void testNewInstance() {
-		UnsupportedOperationException e = assertThrows(UnsupportedOperationException.class, DateTimeUtils::new);
+		UnsupportedOperationException e = assertThrows(UnsupportedOperationException.class, DateTime::new);
 		assertEquals("Utility class should not be instantiated", e.getMessage());
 	}
 
@@ -37,26 +38,26 @@ class DateTimeUtilsTest {
 	})
 	void testToLocalDateTime(String datetimeWithDefaultZone, String targetZoneId, String expected) throws ParseException {
 		ZoneId zoneId = ZoneId.of(targetZoneId);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTimeUtils.DEFAULT_DATE_TIME_PATTERN);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTime.DEFAULT_DATE_TIME_PATTERN);
 
-		LocalDateTime result = DateTimeUtils.toLocalDateTime(datetimeWithDefaultZone, formatter, zoneId);
+		LocalDateTime result = DateTime.toLocalDateTime(datetimeWithDefaultZone, formatter, zoneId);
 		assertEquals(expected, result.format(formatter));
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DateTimeUtils.DEFAULT_DATE_TIME_PATTERN);
+		SimpleDateFormat dateFormat = new SimpleDateFormat(DateTime.DEFAULT_DATE_TIME_PATTERN);
 		Date parsedDate = dateFormat.parse(datetimeWithDefaultZone);
-		result = DateTimeUtils.toLocalDateTime(parsedDate, zoneId);
+		result = DateTime.toLocalDateTime(parsedDate, zoneId);
 		assertEquals(expected, result.format(formatter));
 
 		LocalDateTime localDateTime = LocalDateTime.parse(datetimeWithDefaultZone, formatter);
-		result = DateTimeUtils.toLocalDateTime(localDateTime, zoneId);
+		result = DateTime.toLocalDateTime(localDateTime, zoneId);
 		assertEquals(expected, result.format(formatter));
 
 		LocalDate localDate = localDateTime.toLocalDate();
-		LocalDate zonedLocalDate = DateTimeUtils.toLocalDate(localDate, zoneId);
+		LocalDate zonedLocalDate = DateTime.toLocalDate(localDate, zoneId);
 		assertEquals(expected.substring(0, 10), zonedLocalDate.toString());
 
-		Date date = DateTimeUtils.toDate(localDateTime);
-		result = DateTimeUtils.toLocalDateTime(date, zoneId);
+		Date date = DateTime.toDate(localDateTime);
+		result = DateTime.toLocalDateTime(date, zoneId);
 		assertEquals(expected, result.format(formatter));
 	}
 
@@ -65,20 +66,20 @@ class DateTimeUtilsTest {
 	void testToLocalDate(String datetimeWithDefaultZone, String targetZoneId, String expected) {
 		ZoneId zoneId = ZoneId.of(targetZoneId);
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-		LocalDate localDate = DateTimeUtils.toLocalDate(datetimeWithDefaultZone, formatter, zoneId);
+		LocalDate localDate = DateTime.toLocalDate(datetimeWithDefaultZone, formatter, zoneId);
 		assertEquals(expected, localDate.format(formatter));
 	}
 
 	@ParameterizedTest
 	@CsvSource({"2022-11-07 00:00:00, true", "This is not a LocalDateTime string, false"})
 	void testIsParseableLocalDateTime(String datetime, boolean expected) {
-		assertEquals(expected, DateTimeUtils.isParseableLocalDateTime(datetime));
+		assertEquals(expected, DateTime.isParseableLocalDateTime(datetime));
 	}
 
 	@ParameterizedTest
 	@CsvSource({"2022-11-07, true", "This is not a LocalDate string, false"})
 	void testIsParseableLocalDate(String date, boolean expected) {
-		assertEquals(expected, DateTimeUtils.isParseableLocalDate(date));
+		assertEquals(expected, DateTime.isParseableLocalDate(date));
 	}
 
 	@ParameterizedTest
@@ -91,22 +92,22 @@ class DateTimeUtilsTest {
 		"UTC+9, Asia/Ujung_Pandang, false"
 	})
 	void testIsSameZone(String zoneId, String anotherZoneId, boolean expected) {
-		assertEquals(expected, DateTimeUtils.isSameZone(ZoneId.of(zoneId), ZoneId.of(anotherZoneId)));
+		assertEquals(expected, DateTime.isSameZone(ZoneId.of(zoneId), ZoneId.of(anotherZoneId)));
 	}
 
 	@Test
 	void testMinAndMaxLocalDateTime() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTimeUtils.DEFAULT_DATE_TIME_PATTERN);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTime.DEFAULT_DATE_TIME_PATTERN);
 		LocalDateTime datetime1 = LocalDateTime.parse("2024-11-07 00:00:00", formatter);
 		LocalDateTime datetime2 = LocalDateTime.parse("2024-11-06 23:00:00", formatter);
 		LocalDateTime datetime3 = LocalDateTime.parse("2023-11-07 00:00:00", formatter);
 		LocalDateTime datetime4 = LocalDateTime.parse("2023-11-06 23:00:00", formatter);
 		LocalDateTime datetime5 = LocalDateTime.parse("2024-11-11 00:00:00", formatter);
 
-		LocalDateTime max = DateTimeUtils.max(datetime1, datetime2, datetime3, datetime4, datetime5);
+		LocalDateTime max = DateTime.max(datetime1, datetime2, datetime3, datetime4, datetime5);
 		assertEquals(max, datetime5);
 
-		LocalDateTime min = DateTimeUtils.min(datetime1, datetime2, datetime3, datetime4, datetime5);
+		LocalDateTime min = DateTime.min(datetime1, datetime2, datetime3, datetime4, datetime5);
 		assertEquals(min, datetime4);
 	}
 
@@ -118,10 +119,10 @@ class DateTimeUtilsTest {
 		LocalDate date4 = LocalDate.parse("2023-11-06");
 		LocalDate date5 = LocalDate.parse("2024-11-11");
 
-		LocalDate max = DateTimeUtils.max(date1, date2, date3, date4, date5);
+		LocalDate max = DateTime.max(date1, date2, date3, date4, date5);
 		assertEquals(max, date5);
 
-		LocalDate min = DateTimeUtils.min(date1, date2, date3, date4, date5);
+		LocalDate min = DateTime.min(date1, date2, date3, date4, date5);
 		assertEquals(min, date4);
 	}
 
