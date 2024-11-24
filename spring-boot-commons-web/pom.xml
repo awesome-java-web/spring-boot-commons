@@ -34,7 +34,7 @@
     <developers>
         <developer>
             <name>codeboyzhou</name>
-            <email>imzhouchen@gmail.com</email>
+            <mail>imzhouchen@gmail.com</mail>
             <organization>Awesome Java Web</organization>
             <organizationUrl>https://github.com/awesome-java-web</organizationUrl>
         </developer>
@@ -75,11 +75,22 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- spring-boot-starter-mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- spring-boot-starter-data-redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <!-- spring-boot-commons-retry -->
+        <dependency>
+            <groupId>io.github.awesome-java-web</groupId>
+            <artifactId>spring-boot-commons-retry</artifactId>
         </dependency>
         <!-- spring-boot-commons-util -->
         <dependency>

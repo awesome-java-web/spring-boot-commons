@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.springframework.boot.commons.mail.AutoConfiguration

@@ -34,7 +34,7 @@
     <developers>
         <developer>
             <name>codeboyzhou</name>
-            <email>imzhouchen@gmail.com</email>
+            <mail>imzhouchen@gmail.com</mail>
             <organization>Awesome Java Web</organization>
             <organizationUrl>https://github.com/awesome-java-web</organizationUrl>
         </developer>
@@ -87,12 +87,6 @@
     </build>
 
     <dependencies>
-        <!-- spring-boot-commons-mail -->
-        <dependency>
-            <groupId>io.github.awesome-java-web</groupId>
-            <artifactId>spring-boot-commons-mail</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- spring-boot-commons-mybatis -->
         <dependency>
             <groupId>io.github.awesome-java-web</groupId>

@@ -30,7 +30,7 @@
 	<developers>
 		<developer>
 			<name>codeboyzhou</name>
-			<email>imzhouchen@gmail.com</email>
+			<mail>imzhouchen@gmail.com</mail>
 			<organization>Awesome Java Web</organization>
 			<organizationUrl>https://github.com/awesome-java-web</organizationUrl>
 		</developer>
@@ -49,7 +49,6 @@
 
 	<modules>
 		<module>spring-boot-commons-all</module>
-		<module>spring-boot-commons-mail</module>
 		<module>spring-boot-commons-mybatis</module>
 		<module>spring-boot-commons-retry</module>
 		<module>spring-boot-commons-scripting</module>
