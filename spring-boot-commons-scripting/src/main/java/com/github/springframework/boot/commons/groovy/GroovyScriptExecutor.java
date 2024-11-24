@@ -1,9 +1,9 @@
 package com.github.springframework.boot.commons.groovy;
 
-import com.github.springframework.boot.commons.groovy.cache.LocalCacheManager;
 import com.github.springframework.boot.commons.groovy.exception.GroovyObjectInvokeMethodException;
 import com.github.springframework.boot.commons.groovy.exception.GroovyScriptParseException;
 import com.github.springframework.boot.commons.groovy.exception.InvalidGroovyScriptException;
+import com.github.springframework.boot.commons.util.base.LRUMap;
 import com.github.springframework.boot.commons.util.crypto.MessageDigests;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
@@ -14,96 +14,77 @@ import java.io.IOException;
 
 public class GroovyScriptExecutor {
 
-    private GroovyScriptCompiler groovyScriptCompiler;
+	private final GroovyScriptCompiler groovyScriptCompiler = GroovyScriptCompiler.defaultCompiler();
 
-    private LocalCacheManager localCacheManager;
+	private final LRUMap<String, GroovyObject> cachedGroovyObject = new LRUMap<>(10);
 
-    public static GroovyScriptExecutor newBuilder() {
-        return new GroovyScriptExecutor();
-    }
+	public Object execute(final String classScript, final String function, final Object... parameters) {
+		// Parse the script and put it into cache instantly if it is not in cache
+		GroovyObject groovyObjectCache = getGroovyObjectCacheFromScript(classScript);
+		if (groovyObjectCache == null) {
+			final String trimmedScript = classScript.trim();
+			final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
+			groovyObjectCache = parseClassScript(trimmedScript);
+			cachedGroovyObject.put(scriptCacheKey, groovyObjectCache);
+		}
 
-    public GroovyScriptExecutor() {
-        this.groovyScriptCompiler = GroovyScriptCompiler.asDefault();
-        this.localCacheManager = LocalCacheManager.newBuilder().useDefaultCache();
-    }
+		// Script is parsed successfully
+		return invokeMethod(groovyObjectCache, function, parameters);
+	}
 
-    public GroovyScriptExecutor with(GroovyScriptCompiler groovyScriptCompiler) {
-        this.groovyScriptCompiler = groovyScriptCompiler;
-        return this;
-    }
+	public Object evaluate(final String scriptText, final String function, final Object... parameters) {
+		// Parse the script and put it into cache instantly if it is not in cache
+		GroovyObject groovyObjectCache = getGroovyObjectCacheFromScript(scriptText);
+		if (groovyObjectCache == null) {
+			final String trimmedScript = scriptText.trim();
+			final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
+			groovyObjectCache = parseScriptSnippet(trimmedScript);
+			cachedGroovyObject.put(scriptCacheKey, groovyObjectCache);
+		}
 
-    public GroovyScriptExecutor with(LocalCacheManager localCacheManager) {
-        this.localCacheManager = localCacheManager;
-        return this;
-    }
+		// Script is parsed successfully
+		return invokeMethod(groovyObjectCache, function, parameters);
+	}
 
-    public Object execute(final String classScript, final String function, final Object... parameters) {
-        // Parse the script and put it into cache instantly if it is not in cache
-        GroovyObject groovyObjectCache = this.getGroovyObjectCacheFromScript(classScript);
-        if (groovyObjectCache == null) {
-            final String trimmedScript = classScript.trim();
-            final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
-            groovyObjectCache = parseClassScript(trimmedScript);
-            this.localCacheManager.put(scriptCacheKey, groovyObjectCache);
-        }
+	private GroovyObject getGroovyObjectCacheFromScript(final String scriptText) {
+		if (scriptText == null) {
+			throw new InvalidGroovyScriptException("Groovy script is null");
+		}
 
-        // Script is parsed successfully
-        return invokeMethod(groovyObjectCache, function, parameters);
-    }
+		final String trimmedScript = scriptText.trim();
+		if (trimmedScript.isEmpty()) {
+			throw new InvalidGroovyScriptException("Groovy script is empty");
+		}
 
-    public Object evaluate(final String scriptText, final String function, final Object... parameters) {
-        // Parse the script and put it into cache instantly if it is not in cache
-        GroovyObject groovyObjectCache = this.getGroovyObjectCacheFromScript(scriptText);
-        if (groovyObjectCache == null) {
-            final String trimmedScript = scriptText.trim();
-            final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
-            groovyObjectCache = parseScriptSnippet(trimmedScript);
-            this.localCacheManager.put(scriptCacheKey, groovyObjectCache);
-        }
+		final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
+		return cachedGroovyObject.get(scriptCacheKey);
+	}
 
-        // Script is parsed successfully
-        return invokeMethod(groovyObjectCache, function, parameters);
-    }
+	private GroovyObject parseClassScript(final String classScript) {
+		ClassLoader currentClassLoader = getClass().getClassLoader();
+		CompilerConfiguration configuration = groovyScriptCompiler.getCompilerConfiguration();
+		try (GroovyClassLoader groovyClassLoader = new GroovyClassLoader(currentClassLoader, configuration)) {
+			Class<?> scriptClass = groovyClassLoader.parseClass(classScript);
+			return (GroovyObject) scriptClass.newInstance();
+		} catch (IOException | InstantiationException | IllegalAccessException e) {
+			final String errorMessage = String.format("Failed to parse groovy class script, nested exception is %s", e);
+			throw new GroovyScriptParseException(errorMessage, e);
+		}
+	}
 
-    private GroovyObject getGroovyObjectCacheFromScript(final String scriptText) {
-        if (scriptText == null) {
-            throw new InvalidGroovyScriptException("Groovy script is null");
-        }
+	private GroovyObject parseScriptSnippet(final String scriptText) {
+		CompilerConfiguration configuration = groovyScriptCompiler.getCompilerConfiguration();
+		GroovyShell groovyShell = new GroovyShell(configuration);
+		return groovyShell.parse(scriptText);
+	}
 
-        final String trimmedScript = scriptText.trim();
-        if (trimmedScript.isEmpty()) {
-            throw new InvalidGroovyScriptException("Groovy script is empty");
-        }
-
-        final String scriptCacheKey = MessageDigests.md5Hex(trimmedScript);
-        return this.localCacheManager.getIfPresent(scriptCacheKey);
-    }
-
-    private GroovyObject parseClassScript(final String classScript) {
-        ClassLoader currentClassLoader = getClass().getClassLoader();
-        CompilerConfiguration configuration = this.groovyScriptCompiler.getCompilerConfiguration();
-        try (GroovyClassLoader groovyClassLoader = new GroovyClassLoader(currentClassLoader, configuration)) {
-            Class<?> scriptClass = groovyClassLoader.parseClass(classScript);
-            return (GroovyObject) scriptClass.newInstance();
-        } catch (IOException | InstantiationException | IllegalAccessException e) {
-            final String errorMessage = String.format("Failed to parse groovy class script, nested exception is %s", e);
-            throw new GroovyScriptParseException(errorMessage, e);
-        }
-    }
-
-    private GroovyObject parseScriptSnippet(final String scriptText) {
-        CompilerConfiguration configuration = this.groovyScriptCompiler.getCompilerConfiguration();
-        GroovyShell groovyShell = new GroovyShell(configuration);
-        return groovyShell.parse(scriptText);
-    }
-
-    private Object invokeMethod(GroovyObject groovyObject, String function, Object... parameters) {
-        try {
-            return groovyObject.invokeMethod(function, parameters);
-        } catch (Exception e) {
-            final String errorMessage = String.format("Failed to invoke groovy method '%s', nested exception is %s", function, e);
-            throw new GroovyObjectInvokeMethodException(errorMessage, e);
-        }
-    }
+	private Object invokeMethod(GroovyObject groovyObject, String function, Object... parameters) {
+		try {
+			return groovyObject.invokeMethod(function, parameters);
+		} catch (Exception e) {
+			final String errorMessage = String.format("Failed to invoke groovy method '%s', nested exception is %s", function, e);
+			throw new GroovyObjectInvokeMethodException(errorMessage, e);
+		}
+	}
 
 }

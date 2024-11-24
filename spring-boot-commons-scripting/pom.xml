@@ -67,18 +67,6 @@
             <groupId>io.github.awesome-java-web</groupId>
             <artifactId>spring-boot-commons-util</artifactId>
         </dependency>
-        <!-- caffeine -->
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <distributionManagement>

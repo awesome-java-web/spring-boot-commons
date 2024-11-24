@@ -9,29 +9,29 @@ import org.kohsuke.groovy.sandbox.SandboxTransformer;
 
 public class GroovyScriptCompiler {
 
-    private final CompilerConfiguration compilerConfiguration;
+	private final CompilerConfiguration compilerConfiguration;
 
-    public static GroovyScriptCompiler asDefault() {
-        return new GroovyScriptCompiler();
-    }
+	public static GroovyScriptCompiler defaultCompiler() {
+		return new GroovyScriptCompiler();
+	}
 
-    public GroovyScriptCompiler() {
-        this.compilerConfiguration = new CompilerConfiguration();
-        this.addCompilationCustomizer(new SandboxTransformer());
-        this.registerSecurityInterceptor(new SystemClassInterceptor());
-        this.registerSecurityInterceptor(new RuntimeClassInterceptor());
-    }
+	public GroovyScriptCompiler() {
+		compilerConfiguration = new CompilerConfiguration();
+		addCompilationCustomizer(new SandboxTransformer());
+		registerSecurityInterceptor(new SystemClassInterceptor());
+		registerSecurityInterceptor(new RuntimeClassInterceptor());
+	}
 
-    public void addCompilationCustomizer(CompilationCustomizer customizer) {
-        this.compilerConfiguration.addCompilationCustomizers(customizer);
-    }
+	public void addCompilationCustomizer(CompilationCustomizer customizer) {
+		compilerConfiguration.addCompilationCustomizers(customizer);
+	}
 
-    public void registerSecurityInterceptor(GroovyInterceptor interceptor) {
-        interceptor.register();
-    }
+	public void registerSecurityInterceptor(GroovyInterceptor interceptor) {
+		interceptor.register();
+	}
 
-    public CompilerConfiguration getCompilerConfiguration() {
-        return compilerConfiguration;
-    }
+	public CompilerConfiguration getCompilerConfiguration() {
+		return compilerConfiguration;
+	}
 
 }
