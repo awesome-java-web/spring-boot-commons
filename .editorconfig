@@ -8,7 +8,7 @@ insert_final_newline = true
 [*.{groovy,java,kt,xml}]
 tab_width = 4
 indent_size = 4
-indent_style = tab
+indent_style = space
 trim_trailing_whitespace = true
 ij_java_continuation_indent_size = 4
 
