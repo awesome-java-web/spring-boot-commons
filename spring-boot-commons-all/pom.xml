@@ -51,7 +51,6 @@
         <url>https://github.com/awesome-java-web/spring-boot-commons/issues</url>
     </issueManagement>
 
-
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -87,6 +86,11 @@
     </build>
 
     <dependencies>
+        <!-- spring-boot-starter-web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <!-- spring-boot-commons-mybatis -->
         <dependency>
             <groupId>io.github.awesome-java-web</groupId>
