@@ -1,6 +1,8 @@
 package com.github.springframework.boot.commons;
 
 import com.github.springframework.boot.commons.groovy.GroovyScriptExecutor;
+import com.github.springframework.boot.commons.util.bean.AtomicRedisOperations;
+import com.github.springframework.boot.commons.util.bean.SpringApplicationContextHolder;
 import com.github.springframework.boot.commons.web.interceptor.DuplicateHttpRequestInterceptor;
 import com.github.springframework.boot.commons.web.mail.MailSendService;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,16 @@ public class BeanInitializer {
     @Bean
     public GroovyScriptExecutor groovyScriptExecutor() {
         return new GroovyScriptExecutor();
+    }
+
+    @Bean
+    public AtomicRedisOperations atomicRedisOperations() {
+        return new AtomicRedisOperations();
+    }
+
+    @Bean
+    public SpringApplicationContextHolder springApplicationContextHolder() {
+        return new SpringApplicationContextHolder();
     }
 
     @Bean
