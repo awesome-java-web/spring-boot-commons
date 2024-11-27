@@ -1,4 +1,4 @@
-package com.github.springframework.boot.commons.groovy.security;
+package com.github.springframework.boot.commons.scripting.groovy.security;
 
 import org.kohsuke.groovy.sandbox.GroovyInterceptor;
 

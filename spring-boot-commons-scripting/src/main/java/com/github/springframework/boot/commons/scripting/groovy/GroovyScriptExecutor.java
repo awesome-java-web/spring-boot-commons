@@ -1,22 +1,26 @@
-package com.github.springframework.boot.commons.groovy;
+package com.github.springframework.boot.commons.scripting.groovy;
 
-import com.github.springframework.boot.commons.groovy.exception.GroovyObjectInvokeMethodException;
-import com.github.springframework.boot.commons.groovy.exception.GroovyScriptParseException;
-import com.github.springframework.boot.commons.groovy.exception.InvalidGroovyScriptException;
+import com.github.springframework.boot.commons.scripting.groovy.exception.GroovyObjectInvokeMethodException;
+import com.github.springframework.boot.commons.scripting.groovy.exception.GroovyScriptParseException;
+import com.github.springframework.boot.commons.scripting.groovy.exception.InvalidGroovyScriptException;
 import com.github.springframework.boot.commons.util.base.LRUMap;
 import com.github.springframework.boot.commons.util.crypto.MessageDigests;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
 import groovy.lang.GroovyShell;
 import org.codehaus.groovy.control.CompilerConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
 public class GroovyScriptExecutor {
 
+    @Autowired
+    private GroovyScriptExecutorConfiguration groovyScriptExecutorConfiguration;
+
 	private final GroovyScriptCompiler groovyScriptCompiler = GroovyScriptCompiler.defaultCompiler();
 
-	private final LRUMap<String, GroovyObject> cachedGroovyObject = new LRUMap<>(10);
+	private final LRUMap<String, GroovyObject> cachedGroovyObject = new LRUMap<>(groovyScriptExecutorConfiguration.getGroovyObjectCacheMaxSize());
 
 	public Object execute(final String classScript, final String function, final Object... parameters) {
 		// Parse the script and put it into cache instantly if it is not in cache

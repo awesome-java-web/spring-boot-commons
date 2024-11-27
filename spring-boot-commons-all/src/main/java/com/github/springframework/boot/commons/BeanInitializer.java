@@ -1,6 +1,6 @@
 package com.github.springframework.boot.commons;
 
-import com.github.springframework.boot.commons.groovy.GroovyScriptExecutor;
+import com.github.springframework.boot.commons.scripting.groovy.GroovyScriptExecutor;
 import com.github.springframework.boot.commons.util.bean.AtomicRedisOperations;
 import com.github.springframework.boot.commons.util.bean.SpringApplicationContextHolder;
 import com.github.springframework.boot.commons.web.interceptor.DuplicateHttpRequestInterceptor;

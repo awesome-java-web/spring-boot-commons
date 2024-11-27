@@ -1,8 +1,9 @@
 package com.github.springframework.boot.commons.groovy;
 
-import com.github.springframework.boot.commons.groovy.exception.GroovyObjectInvokeMethodException;
-import com.github.springframework.boot.commons.groovy.exception.GroovyScriptParseException;
-import com.github.springframework.boot.commons.groovy.exception.InvalidGroovyScriptException;
+import com.github.springframework.boot.commons.scripting.groovy.GroovyScriptExecutor;
+import com.github.springframework.boot.commons.scripting.groovy.exception.GroovyObjectInvokeMethodException;
+import com.github.springframework.boot.commons.scripting.groovy.exception.GroovyScriptParseException;
+import com.github.springframework.boot.commons.scripting.groovy.exception.InvalidGroovyScriptException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

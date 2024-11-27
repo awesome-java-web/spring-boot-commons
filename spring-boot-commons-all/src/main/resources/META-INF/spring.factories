@@ -1,1 +1,4 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.springframework.boot.commons.BeanInitializer
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.github.springframework.boot.commons.BeanInitializer,\
+com.github.springframework.boot.commons.scripting.ScriptExecutorConfiguration,\
+com.github.springframework.boot.commons.scripting.groovy.GroovyScriptExecutorConfiguration

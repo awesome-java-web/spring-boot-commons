@@ -1,7 +1,7 @@
-package com.github.springframework.boot.commons.groovy;
+package com.github.springframework.boot.commons.scripting.groovy;
 
-import com.github.springframework.boot.commons.groovy.security.RuntimeClassInterceptor;
-import com.github.springframework.boot.commons.groovy.security.SystemClassInterceptor;
+import com.github.springframework.boot.commons.scripting.groovy.security.RuntimeClassInterceptor;
+import com.github.springframework.boot.commons.scripting.groovy.security.SystemClassInterceptor;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.CompilationCustomizer;
 import org.kohsuke.groovy.sandbox.GroovyInterceptor;

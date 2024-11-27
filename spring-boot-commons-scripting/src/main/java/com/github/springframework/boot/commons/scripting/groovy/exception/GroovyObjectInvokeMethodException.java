@@ -1,4 +1,4 @@
-package com.github.springframework.boot.commons.groovy.exception;
+package com.github.springframework.boot.commons.scripting.groovy.exception;
 
 public class GroovyObjectInvokeMethodException extends RuntimeException {
 
