@@ -28,7 +28,7 @@ public class BeanInitializer {
 
     @Bean
     public SpringApplicationContextHolder springApplicationContextHolder() {
-        return new SpringApplicationContextHolder();
+        return SpringApplicationContextHolder.initializeAsBean();
     }
 
     @Bean
