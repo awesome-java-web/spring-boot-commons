@@ -1,7 +1,7 @@
 package com.github.springframework.boot.commons.util;
 
-import com.github.springframework.boot.commons.util.base.Strings;
 import com.github.springframework.boot.commons.util.safe.SafeMapReader;
+import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

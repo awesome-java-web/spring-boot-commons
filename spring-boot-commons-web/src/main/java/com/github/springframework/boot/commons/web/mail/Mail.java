@@ -1,7 +1,7 @@
 package com.github.springframework.boot.commons.web.mail;
 
 import com.github.springframework.boot.commons.retry.RetryHandler;
-import com.github.springframework.boot.commons.util.base.Strings;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.util.StringUtils;
 
