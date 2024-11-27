@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toSet;
+
 class ParameterAndResultSetResolver {
 
     private static final Logger logger = LoggerFactory.getLogger(ParameterAndResultSetResolver.class);
@@ -109,15 +111,13 @@ class ParameterAndResultSetResolver {
             return;
         }
 
+        Set<String> javaFieldNames = tableFieldNames.stream().map(FieldNameUtils::underscoreToCamelCase).collect(toSet());
         ReflectionUtils.doWithFields(object.getClass(), field -> {
-            for (String tableFieldName : tableFieldNames) {
-                final String javaFieldName = FieldNameUtils.underscoreToCamelCase(tableFieldName);
-                if (javaFieldName.equals(field.getName())) {
-                    field.setAccessible(true);
-                    Object javaFieldValue = field.get(object);
-                    Object handledValue = handler.handle(tableName, tableFieldName, javaFieldValue);
-                    field.set(object, handledValue);
-                }
+            if (javaFieldNames.contains(field.getName())) {
+                field.setAccessible(true);
+                Object javaFieldValue = field.get(object);
+                Object handledValue = handler.handle(tableName, field.getName(), javaFieldValue);
+                field.set(object, handledValue);
             }
         });
     }
