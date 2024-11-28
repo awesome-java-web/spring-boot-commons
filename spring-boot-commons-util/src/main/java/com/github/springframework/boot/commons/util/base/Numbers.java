@@ -57,6 +57,18 @@ public final class Numbers {
         return defaultIfNull(number, BigDecimal.ZERO);
     }
 
+    public static boolean isPositive(BigDecimal number) {
+        return number != null && number.compareTo(BigDecimal.ZERO) > 0;
+    }
+
+    public static boolean isNegative(BigDecimal number) {
+        return number != null && number.compareTo(BigDecimal.ZERO) < 0;
+    }
+
+    public static boolean isZero(BigDecimal number) {
+        return number != null && number.compareTo(BigDecimal.ZERO) == 0;
+    }
+
     public static boolean isCurrencyAmount(String number) {
         if (number == null || number.isEmpty()) {
             return false;
