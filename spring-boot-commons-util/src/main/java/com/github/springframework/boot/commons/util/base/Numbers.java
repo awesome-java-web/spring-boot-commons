@@ -69,7 +69,7 @@ public final class Numbers {
         return number != null && number.compareTo(BigDecimal.ZERO) == 0;
     }
 
-    public static boolean isCurrencyAmount(String number) {
+    public static boolean canBeConvertedToBigDecimal(String number) {
         if (number == null || number.isEmpty()) {
             return false;
         }

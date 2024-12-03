@@ -96,8 +96,8 @@ class NumbersTest {
         ", false", "'', false", "+, false", "-, false", "123, true", "123.45, true",
         "+123.45, true", "-123.45, true", "123+45, false", "123-45, false", "123.45.67, false"
     })
-    void testIsCurrencyAmount(String number, boolean expected) {
-        assertEquals(expected, Numbers.isCurrencyAmount(number));
+    void testCanBeConvertedToBigDecimal(String number, boolean expected) {
+        assertEquals(expected, Numbers.canBeConvertedToBigDecimal(number));
     }
 
 }
