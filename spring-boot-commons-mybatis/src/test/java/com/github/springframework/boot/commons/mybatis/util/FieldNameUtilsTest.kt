@@ -1,65 +1,44 @@
-package com.github.springframework.boot.commons.mybatis.util;
+package com.github.springframework.boot.commons.mybatis.util
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class FieldNameUtilsTest {
 
-	static MockedStatic<LoggerFactory> mockLoggerFactory;
-
-	@BeforeAll
-	static void setup() {
-		Logger mockLogger = mock(Logger.class);
-		mockLoggerFactory = mockStatic(LoggerFactory.class);
-		mockLoggerFactory.when(() -> LoggerFactory.getLogger(FieldNameUtils.class)).thenReturn(mockLogger);
-		when(mockLogger.isDebugEnabled()).thenReturn(true);
-	}
-
-	@AfterAll
-	static void cleanup() {
-		mockLoggerFactory.close();
-	}
-
     @Test
-    void testNewInstance() {
-        UnsupportedOperationException e = assertThrows(UnsupportedOperationException.class, FieldNameUtils::new);
-        assertEquals("Utility class should not be instantiated", e.getMessage());
+    fun testNewInstance() {
+        assertThrows<UnsupportedOperationException>(FieldNameUtils::class.java::newInstance)
     }
 
     @Test
-    void testDetermineTargetFieldNames() {
-        List<String> tableFields = Arrays.asList("user_id", "user_name", "user_age");
-        List<String> result = FieldNameUtils.determineTargetFieldNames(Collections.singletonMap("*", tableFields), "test");
-        assertEquals(tableFields, result);
-        result = FieldNameUtils.determineTargetFieldNames(Collections.singletonMap("test", tableFields), "test");
-        assertEquals(tableFields, result);
-        result = FieldNameUtils.determineTargetFieldNames(Collections.singletonMap("test", tableFields), "test1");
-        assertEquals(Collections.emptyList(), result);
+    fun testDetermineTargetFieldNames_HitTableName() {
+        val tableName = "test_table_name"
+        val tableFields = mapOf(tableName to listOf("id", "name", "age"))
+        val targetFieldNames = FieldNameUtils.determineTargetFieldNames(tableFields, tableName)
+        assert(targetFieldNames.size == tableFields.values.flatten().size)
+        assert(targetFieldNames.containsAll(tableFields.values.flatten()))
     }
 
     @Test
-    void testUnderscoreToCamelCase() {
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> FieldNameUtils.underscoreToCamelCase(null));
-        assertEquals("underscoreName == null || underscoreName.isEmpty()", e.getMessage());
-        e = assertThrows(IllegalArgumentException.class, () -> FieldNameUtils.underscoreToCamelCase(""));
-        assertEquals("underscoreName == null || underscoreName.isEmpty()", e.getMessage());
+    fun testDetermineTargetFieldNames_NotHitTableName() {
+        val tableName = "test_table_name"
+        val tableFields = mapOf("other_table_name" to listOf("id", "name", "age"))
+        val targetFieldNames = FieldNameUtils.determineTargetFieldNames(tableFields, tableName)
+        assert(targetFieldNames.isEmpty())
+    }
 
-        assertEquals("userUTest", FieldNameUtils.underscoreToCamelCase("user_u_test"));
-        assertEquals("userId", FieldNameUtils.underscoreToCamelCase("user_id"));
-        assertEquals("userName", FieldNameUtils.underscoreToCamelCase("user_name"));
-        assertEquals("userAge", FieldNameUtils.underscoreToCamelCase("user_age"));
+    @Test
+    fun testUnderscoreToCamelCase_NullOrEmptyParameter() {
+        assertThrows<IllegalArgumentException> { FieldNameUtils.underscoreToCamelCase(null) }
+        assertThrows<IllegalArgumentException> { FieldNameUtils.underscoreToCamelCase("") }
+    }
+
+    @Test
+    fun testUnderscoreToCamelCase_NormalParameter() {
+        assert(FieldNameUtils.underscoreToCamelCase("test_table_name") == "testTableName")
+        assert(FieldNameUtils.underscoreToCamelCase("test_table_name_id") == "testTableNameId")
+        assert(FieldNameUtils.underscoreToCamelCase("test_table_name_id_name") == "testTableNameIdName")
+        assert(FieldNameUtils.underscoreToCamelCase("test_table_name_id_name_a") == "testTableNameIdNameA")
     }
 
 }

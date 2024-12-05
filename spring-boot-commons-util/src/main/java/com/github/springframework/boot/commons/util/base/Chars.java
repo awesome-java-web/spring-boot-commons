@@ -18,6 +18,8 @@ public enum Chars {
 
     PERCENT('%'),
 
+    WILDCARD('*'),
+
     ;
 
     private final char charValue;
