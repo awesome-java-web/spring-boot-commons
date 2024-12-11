@@ -1,6 +1,16 @@
 root = true
 
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
 [*.{groovy,java,kt,xml}]
-indent_style = tab
+tab_width = 4
 indent_size = 4
-continuation_indent_size = 8
+indent_style = space
+trim_trailing_whitespace = true
+ij_java_continuation_indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false
