@@ -11,6 +11,7 @@ import org.apache.groovy.util.concurrent.ConcurrentReferenceHashMap;
 import org.codehaus.groovy.control.CompilerConfiguration;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -122,8 +123,8 @@ public class GroovyScriptExecutor {
         CompilerConfiguration configuration = groovyScriptCompiler.getCompilerConfiguration();
         try (GroovyClassLoader groovyClassLoader = new GroovyClassLoader(currentClassLoader, configuration)) {
             Class<?> scriptClass = groovyClassLoader.parseClass(classScript);
-            return (GroovyObject) scriptClass.newInstance();
-        } catch (IOException | InstantiationException | IllegalAccessException e) {
+            return (GroovyObject) scriptClass.getConstructor().newInstance();
+        } catch (IOException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
             final String errorMessage = String.format("Failed to parse groovy class script, nested exception is %s", e);
             throw new GroovyScriptParseException(errorMessage, e);
         }
