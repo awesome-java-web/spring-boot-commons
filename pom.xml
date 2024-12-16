@@ -57,6 +57,7 @@
     </distributionManagement>
 
     <modules>
+        <module>spring-boot-commons-base</module>
         <module>spring-boot-commons-scripting</module>
     </modules>
 
@@ -72,6 +73,8 @@
         <commons-codec.version>1.17.1</commons-codec.version>
         <groovy.version>4.0.6</groovy.version>
         <groovy-sandbox.version>1.19</groovy-sandbox.version>
+        <mybatis.version>3.5.15</mybatis.version>
+        <guava.version>33.3.1-jre</guava.version>
     </properties>
 
     <build>
@@ -95,9 +98,19 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.awesome-java-web</groupId>
+                <artifactId>spring-boot-commons-base</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.groovy</groupId>
@@ -108,6 +121,11 @@
                 <groupId>org.kohsuke</groupId>
                 <artifactId>groovy-sandbox</artifactId>
                 <version>${groovy-sandbox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
