@@ -9,6 +9,7 @@ package com.github.awesome.springboot.commons.scripting.groovy.exception;
  *
  * <p>构造方法接受一条错误信息和一个导致异常的原因 {@link Throwable}，用于进一步的异常分析。</p>
  *
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @since 1.0.5
  */
 public class GroovyObjectInvokeMethodException extends RuntimeException {

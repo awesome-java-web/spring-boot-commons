@@ -16,6 +16,7 @@ import java.util.List;
  *
  * <p>该拦截器帮助提高脚本的安全性，避免执行潜在的危险操作。</p>
  *
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @since 1.0.5
  */
 public class SystemClassInterceptor extends GroovyInterceptor {

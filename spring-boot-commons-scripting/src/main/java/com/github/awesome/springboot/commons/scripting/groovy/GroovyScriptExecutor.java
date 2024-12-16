@@ -25,6 +25,7 @@ import java.util.Map;
  *
  * <p>该类内部会对解析后的 Groovy 脚本对象进行缓存，避免重复解析相同的脚本，提高执行效率，同时减少内存压力。</p>
  *
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @since 1.0.5
  */
 public class GroovyScriptExecutor {

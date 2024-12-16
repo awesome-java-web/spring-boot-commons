@@ -14,6 +14,7 @@ import org.kohsuke.groovy.sandbox.SandboxTransformer;
  * <p>在构造函数中，默认添加了一些安全拦截器，如 {@link SandboxTransformer} 和 {@link SystemClassInterceptor}，以防止脚本执行潜在的危险操作。</p>
  * <p>该类还提供了方法来注册自定义的拦截器和编译器定制器，以进一步增强安全性和功能性。</p>
  *
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @since 1.0.5
  */
 public class GroovyScriptCompiler {

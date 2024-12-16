@@ -12,6 +12,7 @@ import org.kohsuke.groovy.sandbox.GroovyInterceptor;
  * <p>此拦截器的设计目的是增加代码的安全性，防止 Groovy 脚本中不小心或恶意调用某些敏感方法，
  * 例如执行系统命令等。</p>
  *
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @since 1.0.5
  */
 public class RuntimeClassInterceptor extends GroovyInterceptor {

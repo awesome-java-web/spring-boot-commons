@@ -9,6 +9,7 @@ package com.github.awesome.springboot.commons.scripting.groovy.exception;
  *
  * <p>构造方法接受一条错误信息，用于详细描述为什么该 Groovy 脚本无效。</p>
  *
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @since 1.0.5
  */
 public class InvalidGroovyScriptException extends RuntimeException {
