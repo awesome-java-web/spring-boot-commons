@@ -26,6 +26,7 @@ package com.github.awesome.springboot.commons.base;
  * <p>
  * 本枚举类包含以下字符：
  * <ul>
+ *   <li>空字符</li>
  *   <li>@</li>
  *   <li>&</li>
  *   <li>.</li>
@@ -42,6 +43,11 @@ package com.github.awesome.springboot.commons.base;
  * @since 1.0.5
  */
 public enum Chars {
+
+    /**
+     * 空字符，表示空字符串或空白字符
+     */
+    EMPTY('\0'),
 
     /**
      * "@" 符号，常用于电子邮件地址和社交媒体账号
@@ -107,7 +113,7 @@ public enum Chars {
      */
     Chars(char charValue) {
         this.charValue = charValue;
-        this.stringValue = String.valueOf(charValue);
+        this.stringValue = charValue == '\0' ? "" : String.valueOf(charValue);
     }
 
     /**
