@@ -15,7 +15,7 @@ import org.kohsuke.groovy.sandbox.SandboxTransformer;
  * <p>该类还提供了方法来注册自定义的拦截器和编译器定制器，以进一步增强安全性和功能性。</p>
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public class GroovyScriptCompiler {
 

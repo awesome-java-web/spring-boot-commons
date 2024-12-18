@@ -5,15 +5,12 @@ package com.github.awesome.springboot.commons.base;
  * <p>
  * 该枚举类定义了一组特殊字符，每个字符与其对应的字符值和字符串表示形式相关联。它可以在需要特定特殊字符的场景中使用，例如字符串处理或字符验证。
  * </p>
- *
  * <p>
  * 每个枚举常量有两个属性：
  * <ul>
  *   <li><b>charValue</b>: 字符符号的字符表示。</li>
  *   <li><b>stringValue</b>: 字符符号的字符串表示。</li>
  * </ul>
- * </p>
- *
  * <p>
  * 使用示例：
  * <pre>
@@ -21,33 +18,11 @@ package com.github.awesome.springboot.commons.base;
  *     System.out.println(atSymbol.charValue());   // 输出 '@'
  *     System.out.println(atSymbol.stringValue()); // 输出 "@"
  * </pre>
- * </p>
- *
- * <p>
- * 本枚举类包含以下字符：
- * <ul>
- *   <li>空字符</li>
- *   <li>@</li>
- *   <li>&</li>
- *   <li>.</li>
- *   <li>-</li>
- *   <li>,</li>
- *   <li>=</li>
- *   <li>_</li>
- *   <li>%</li>
- *   <li>*</li>
- * </ul>
- * </p>
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public enum Chars {
-
-    /**
-     * 空字符，表示空字符串或空白字符
-     */
-    EMPTY('\0'),
 
     /**
      * "@" 符号，常用于电子邮件地址和社交媒体账号
@@ -55,7 +30,7 @@ public enum Chars {
     AT('@'),
 
     /**
-     * "&" 符号，常用作逻辑与运算符或用于 URL 中
+     * "&amp;" 符号，常用作逻辑与运算符或用于 URL 中
      */
     AND('&'),
 
@@ -113,7 +88,7 @@ public enum Chars {
      */
     Chars(char charValue) {
         this.charValue = charValue;
-        this.stringValue = charValue == '\0' ? "" : String.valueOf(charValue);
+        this.stringValue = String.valueOf(charValue);
     }
 
     /**

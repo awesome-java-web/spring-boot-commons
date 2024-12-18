@@ -7,7 +7,7 @@ import java.util.Optional;
  * {@code Lists}类是一个工具类，提供了处理{@link List}的一些常用方法。该类的构造函数是私有的，不能实例化
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public final class Lists {
 

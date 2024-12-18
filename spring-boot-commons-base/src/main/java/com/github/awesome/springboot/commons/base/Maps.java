@@ -7,7 +7,7 @@ import java.util.Map;
  * {@code Maps}类是一个工具类，提供了处理{@link Map}的一些常用方法。该类的构造函数是私有的，不能实例化
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public final class Maps {
 
@@ -32,10 +32,10 @@ public final class Maps {
      */
     public static <K, V> String getOrEmptyString(Map<K, V> map, K key) {
         if (map == null || key == null) {
-            return Chars.EMPTY.stringValue();
+            return Strings.EMPTY;
         }
         V value = map.get(key);
-        return value == null ? Chars.EMPTY.stringValue() : value.toString();
+        return value == null ? Strings.EMPTY : value.toString();
     }
 
     /**

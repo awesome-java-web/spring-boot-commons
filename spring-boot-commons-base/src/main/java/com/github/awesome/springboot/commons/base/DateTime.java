@@ -9,7 +9,7 @@ import java.util.Date;
  * 日期时间工具类，该类不应被实例化，所有方法均为静态方法。
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public final class DateTime {
 

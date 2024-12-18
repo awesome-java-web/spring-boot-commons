@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSONObject;
  * </p>
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public final class FastJson {
 

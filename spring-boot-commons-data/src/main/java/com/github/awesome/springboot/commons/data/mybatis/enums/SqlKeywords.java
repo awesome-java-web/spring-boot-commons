@@ -11,7 +11,7 @@ package com.github.awesome.springboot.commons.data.mybatis.enums;
  * </ul>
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public enum SqlKeywords {
     /**

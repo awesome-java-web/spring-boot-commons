@@ -33,7 +33,7 @@ import java.util.Set;
  * @see MybatisFieldHandler
  * @see Executor
  * @see MappedStatement
- * @since 1.0.5
+ * @since 1.1.0
  */
 @Intercepts(@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}))
 public class MybatisParameterInterceptor extends AbstractMybatisInterceptor {

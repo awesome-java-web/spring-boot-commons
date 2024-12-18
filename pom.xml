@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.awesome-java-web</groupId>
     <artifactId>spring-boot-commons</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>spring-boot-commons</name>
@@ -59,6 +57,7 @@
     </distributionManagement>
 
     <modules>
+        <module>spring-boot-commons-all</module>
         <module>spring-boot-commons-base</module>
         <module>spring-boot-commons-data</module>
         <module>spring-boot-commons-scripting</module>
@@ -79,14 +78,73 @@
         <mybatis.version>3.5.15</mybatis.version>
         <guava.version>33.3.1-jre</guava.version>
         <fastjson.version>1.2.83</fastjson.version>
+        <!--============================= plugin version numbers ===============================-->
+        <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
+        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <sort-dependency-maven-plugin.version>1.0.0</sort-dependency-maven-plugin.version>
     </properties>
 
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus-staging-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>io.github.awesome-java-web</groupId>
                 <artifactId>sort-dependency-maven-plugin</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${sort-dependency-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -101,6 +159,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -130,11 +193,6 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

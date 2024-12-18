@@ -23,7 +23,7 @@ import java.time.LocalDate;
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @see LocalDateTypeHandler
- * @since 1.0.5
+ * @since 1.1.0
  */
 public class LocalDateTypeHandlerCustomizer extends LocalDateTypeHandler {
 

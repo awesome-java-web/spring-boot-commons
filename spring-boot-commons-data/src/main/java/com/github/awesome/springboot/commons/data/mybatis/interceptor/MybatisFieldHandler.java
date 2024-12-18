@@ -14,7 +14,7 @@ import java.util.Map;
  * </p>
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public interface MybatisFieldHandler {
 

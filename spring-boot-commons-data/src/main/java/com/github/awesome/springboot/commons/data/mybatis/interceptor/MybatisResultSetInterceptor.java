@@ -31,7 +31,7 @@ import java.util.Set;
  * @see MybatisFieldHandler
  * @see ResultSetHandler
  * @see Statement
- * @since 1.0.5
+ * @since 1.1.0
  */
 @Intercepts(@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class}))
 public class MybatisResultSetInterceptor extends AbstractMybatisInterceptor {

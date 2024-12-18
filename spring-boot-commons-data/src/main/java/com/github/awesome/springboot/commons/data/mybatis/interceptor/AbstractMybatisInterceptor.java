@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.toSet;
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @see Interceptor
- * @since 1.0.5
+ * @since 1.1.0
  */
 public abstract class AbstractMybatisInterceptor implements Interceptor {
 

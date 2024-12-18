@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  * 该类的构造函数是私有的，不能实例化。
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public final class Numbers {
 

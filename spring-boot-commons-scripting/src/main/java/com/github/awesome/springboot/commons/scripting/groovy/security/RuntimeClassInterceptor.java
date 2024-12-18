@@ -13,7 +13,7 @@ import org.kohsuke.groovy.sandbox.GroovyInterceptor;
  * 例如执行系统命令等。</p>
  *
  * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
- * @since 1.0.5
+ * @since 1.1.0
  */
 public class RuntimeClassInterceptor extends GroovyInterceptor {
 
