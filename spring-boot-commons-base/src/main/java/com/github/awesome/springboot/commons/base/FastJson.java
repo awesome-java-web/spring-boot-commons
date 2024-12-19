@@ -15,16 +15,6 @@ import com.alibaba.fastjson.JSONObject;
 public final class FastJson {
 
     /**
-     * 空的{@link JSONObject}对象，作为默认返回值
-     */
-    private static final JSONObject EMPTY_JSON_OBJECT = new JSONObject();
-
-    /**
-     * 空的{@link JSONArray}对象，作为默认返回值
-     */
-    private static final JSONArray EMPTY_JSON_ARRAY = new JSONArray();
-
-    /**
      * 私有构造函数，防止该工具类被实例化
      */
     private FastJson() {
@@ -43,10 +33,10 @@ public final class FastJson {
      */
     public static JSONObject getOrEmptyJsonObject(JSONObject json, final String key) {
         if (json == null) {
-            return EMPTY_JSON_OBJECT;
+            return new JSONObject();
         }
         JSONObject value = json.getJSONObject(key);
-        return value == null ? EMPTY_JSON_OBJECT : value;
+        return value == null ? new JSONObject() : value;
     }
 
     /**
@@ -61,10 +51,10 @@ public final class FastJson {
      */
     public static JSONObject getOrEmptyJsonObject(JSONArray json, final int index) {
         if (json == null || json.isEmpty() || index < 0 || index >= json.size()) {
-            return EMPTY_JSON_OBJECT;
+            return new JSONObject();
         }
         JSONObject value = json.getJSONObject(index);
-        return value == null ? EMPTY_JSON_OBJECT : value;
+        return value == null ? new JSONObject() : value;
     }
 
     /**
@@ -79,10 +69,10 @@ public final class FastJson {
      */
     public static JSONArray getOrEmptyJsonArray(JSONObject json, final String key) {
         if (json == null) {
-            return EMPTY_JSON_ARRAY;
+            return new JSONArray();
         }
         JSONArray value = json.getJSONArray(key);
-        return value == null ? EMPTY_JSON_ARRAY : value;
+        return value == null ? new JSONArray() : value;
     }
 
 }
