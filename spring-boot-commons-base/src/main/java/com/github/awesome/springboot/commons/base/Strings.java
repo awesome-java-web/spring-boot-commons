@@ -1,5 +1,7 @@
 package com.github.awesome.springboot.commons.base;
 
+import com.google.common.annotations.VisibleForTesting;
+
 /**
  * 一个工具类，提供与字符串相关的常用方法
  *
@@ -22,7 +24,8 @@ public final class Strings {
      * 如果尝试实例化该类，会抛出{@link UnsupportedOperationException}异常。
      * </p>
      */
-    private Strings() {
+    @VisibleForTesting
+    Strings() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
