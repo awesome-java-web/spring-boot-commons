@@ -1,5 +1,6 @@
 package com.github.awesome.springboot.commons.base;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -73,6 +74,16 @@ public final class FastJson {
         }
         JSONArray value = json.getJSONArray(key);
         return value == null ? new JSONArray() : value;
+    }
+
+    /**
+     * 解析给定的 JSON 字符串。如果字符串为{@code null}或为空字符串(包括仅含空白字符的字符串)，则返回一个新的空的{@link JSONObject}。
+     *
+     * @param text 要解析的 JSON 字符串
+     * @return 如果字符串为 {@code null} 或为空字符串(包括仅含空白字符的字符串)，则返回一个新的空的{@link JSONObject}；否则返回解析后的{@link JSONObject}。
+     */
+    public static JSONObject parseOrReturnEmptyJsonObject(final String text) {
+        return text == null || text.trim().isEmpty() ? new JSONObject() : JSON.parseObject(text);
     }
 
 }
