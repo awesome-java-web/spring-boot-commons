@@ -1,5 +1,7 @@
 package com.github.awesome.springboot.commons.base;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -16,7 +18,8 @@ public final class Maps {
      *
      * @throws UnsupportedOperationException 总是抛出异常，表示不支持实例化
      */
-    private Maps() {
+    @VisibleForTesting
+    Maps() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 

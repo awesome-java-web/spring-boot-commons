@@ -1,5 +1,7 @@
 package com.github.awesome.springboot.commons.base;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -23,7 +25,8 @@ public final class Numbers {
      *
      * @throws UnsupportedOperationException 总是抛出异常，表示不支持实例化
      */
-    private Numbers() {
+    @VisibleForTesting
+    Numbers() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 

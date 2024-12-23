@@ -1,4 +1,4 @@
-package com.github.awesome.springboot.commons.base;
+package com.github.awesome.springboot.commons.base
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

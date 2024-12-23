@@ -69,6 +69,11 @@ public enum Chars {
      */
     WILDCARD('*'),
 
+    /**
+     * 空格字符
+     */
+    WHITESPACE(' '),
+
     ;
 
     /**

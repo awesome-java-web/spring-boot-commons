@@ -3,6 +3,7 @@ package com.github.awesome.springboot.commons.base;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.annotations.VisibleForTesting;
 
 /**
  * 一个用于操作 fastjson 对象和数组的工具类。
@@ -18,7 +19,8 @@ public final class FastJson {
     /**
      * 私有构造函数，防止该工具类被实例化
      */
-    private FastJson() {
+    @VisibleForTesting
+    FastJson() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
