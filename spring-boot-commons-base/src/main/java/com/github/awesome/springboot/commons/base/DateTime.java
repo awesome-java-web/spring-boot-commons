@@ -1,5 +1,7 @@
 package com.github.awesome.springboot.commons.base;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -33,7 +35,8 @@ public final class DateTime {
      *
      * @throws UnsupportedOperationException 如果尝试实例化该类，则抛出此异常。
      */
-    private DateTime() {
+    @VisibleForTesting
+    DateTime() {
         throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
@@ -60,11 +63,13 @@ public final class DateTime {
 
         if (datetime instanceof String) {
             final String dt = datetime.toString();
-            final boolean isLocalDate = isParseableLocalDate(dt);
-            DateTimeFormatter formatter = isLocalDate ? DEFAULT_DATE_FORMATTER : DEFAULT_DATE_TIME_FORMATTER;
-            return isLocalDate
-                ? toLocalDate(dt, formatter, targetZoneId).format(formatter)
-                : toLocalDateTime(dt, formatter, targetZoneId).format(formatter);
+            if (isParseableLocalDate(dt)) {
+                return toLocalDate(dt, DEFAULT_DATE_FORMATTER, targetZoneId);
+            }
+            if (isParseableLocalDateTime(dt)) {
+                return toLocalDateTime(dt, DEFAULT_DATE_TIME_FORMATTER, targetZoneId);
+            }
+            throw new IllegalArgumentException("Unsupported date time format: " + dt);
         }
 
         if (datetime instanceof LocalDate) {
@@ -178,6 +183,25 @@ public final class DateTime {
     }
 
     /**
+     * 判断给定的日期时间字符串是否可以被解析为{@link LocalDateTime}对象。
+     * <p>
+     * 该方法尝试使用{@link #DEFAULT_DATE_TIME_FORMATTER}格式化器解析给定的日期时间字符串。
+     * 如果解析成功，返回{@code true}；否则，返回{@code false}。
+     * </p>
+     *
+     * @param datetime 输入的日期时间字符串。
+     * @return 如果输入的日期时间字符串可以解析为 {@link LocalDateTime} 对象，则返回{@code true}；否则返回{@code false}。
+     */
+    public static boolean isParseableLocalDateTime(final String datetime) {
+        try {
+            LocalDateTime.parse(datetime, DEFAULT_DATE_TIME_FORMATTER);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    /**
      * 判断两个时区是否为相同的时区。
      * <p>
      * 该方法通过比较当前时刻在两个时区的{@link Instant}是否相等来判断两个时区是否相同。
@@ -188,6 +212,12 @@ public final class DateTime {
      * @return 如果两个时区相同，返回{@code true}；否则返回{@code false}。
      */
     public static boolean isSameZone(ZoneId zoneId, ZoneId anotherZoneId) {
+        if (zoneId == null || anotherZoneId == null) {
+            throw new IllegalArgumentException("zoneId or anotherZoneId is null");
+        }
+        if (zoneId == anotherZoneId) {
+            return true;
+        }
         LocalDateTime now = LocalDateTime.now();
         Instant instant = now.atZone(zoneId).toInstant();
         Instant anotherInstant = now.atZone(anotherZoneId).toInstant();
