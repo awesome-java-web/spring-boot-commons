@@ -27,6 +27,16 @@ class NumbersTest {
     }
 
     @Test
+    fun testIsZero() {
+        assertTrue { Numbers.isZero(BigDecimal("0.00")) }
+        assertTrue { Numbers.isZero(BigDecimal("0.0")) }
+        assertTrue { Numbers.isZero(BigDecimal("0")) }
+        assertTrue { Numbers.isZero(BigDecimal.ZERO) }
+        assertFalse { Numbers.isZero(BigDecimal.ONE) }
+        assertFalse { Numbers.isZero(null) }
+    }
+
+    @Test
     fun testIsPositive() {
         assertTrue { Numbers.isPositive(BigDecimal.ONE) }
         assertFalse { Numbers.isPositive(null) }

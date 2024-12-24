@@ -1,5 +1,6 @@
 package com.github.awesome.springboot.commons.base
 
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.text.SimpleDateFormat
@@ -12,6 +13,11 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class DateTimeTest {
+
+    @BeforeEach
+    fun setup() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"))
+    }
 
     @Test
     fun testNewInstance() {
@@ -62,7 +68,7 @@ class DateTimeTest {
         assertEquals("2024-11-06", result4.toString())
 
         // LocalDateTime as string
-        val result5 = DateTime.atZone("2024-11-07 00:00:00", targetZoneId).toString()
+        val result5 = DateTime.atZone("2024-11-07 00:00:00.000", targetZoneId).toString()
         assertEquals("2024", result5.substring(0, 4))
         assertEquals("11", result5.substring(5, 7))
         assertEquals("06", result5.substring(8, 10))

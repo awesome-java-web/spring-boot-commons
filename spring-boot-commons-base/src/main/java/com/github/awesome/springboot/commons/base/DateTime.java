@@ -21,16 +21,6 @@ public final class DateTime {
     public static final String DEFAULT_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     /**
-     * 默认的日期格式化器，使用{@link DateTimeFormatter#ISO_LOCAL_DATE}格式化模式(yyyy-MM-dd)
-     */
-    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
-
-    /**
-     * 默认的日期时间格式化器，使用{@link #DEFAULT_DATE_TIME_PATTERN}格式化模式。
-     */
-    public static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_PATTERN);
-
-    /**
      * 私有构造函数，防止该工具类被实例化。
      *
      * @throws UnsupportedOperationException 如果尝试实例化该类，则抛出此异常。
@@ -64,10 +54,10 @@ public final class DateTime {
         if (datetime instanceof String) {
             final String dt = datetime.toString();
             if (isParseableLocalDate(dt)) {
-                return toLocalDate(dt, DEFAULT_DATE_FORMATTER, targetZoneId);
+                return toLocalDate(dt, DateTimeFormatter.ISO_LOCAL_DATE, targetZoneId);
             }
             if (isParseableLocalDateTime(dt)) {
-                return toLocalDateTime(dt, DEFAULT_DATE_TIME_FORMATTER, targetZoneId);
+                return toLocalDateTime(dt, DEFAULT_DATE_TIME_PATTERN, targetZoneId);
             }
             throw new IllegalArgumentException("Unsupported date time format: " + dt);
         }
@@ -84,15 +74,53 @@ public final class DateTime {
     }
 
     /**
+     * 将日期时间字符串解析为{@link LocalDateTime}对象。
+     * <p>
+     * 注意：这个方法不会处理时区，只会单纯地解析日期时间字符串，并且会忽略日期时间的毫秒部分。
+     * </p>
+     * <p>
+     * 该方法会根据给定的日期时间格式进行解析，如果解析失败，则抛出{@link DateTimeParseException}异常。
+     * </p>
+     *
+     * @param datetime 日期时间字符串。
+     * @param pattern  日期时间的格式化模式。
+     * @return 解析后的 {@link LocalDateTime} 对象。
+     * @throws DateTimeParseException 如果解析失败，则抛出此异常。
+     */
+    public static LocalDateTime parseIgnoreMillis(final String datetime, final String pattern) {
+        final String ignoredMillis = datetime.substring(0, pattern.length());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return LocalDateTime.parse(ignoredMillis, formatter);
+    }
+
+    /**
+     * 将日期时间字符串解析为{@link LocalDateTime}对象。
+     * <p>
+     * 注意：这个方法不会处理时区，只会单纯地解析日期时间字符串，并且会忽略日期时间的毫秒部分。
+     * </p>
+     * <p>
+     * 该方法会根据给定的日期时间格式进行解析，如果解析失败，则抛出{@link DateTimeParseException}异常。
+     * </p>
+     *
+     * @param datetime 日期时间字符串。
+     * @return 解析后的 {@link LocalDateTime} 对象。
+     * @throws DateTimeParseException 如果解析失败，则抛出此异常。
+     * @see DateTime#parseIgnoreMillis(String, String)
+     */
+    public static LocalDateTime parseIgnoreMillis(final String datetime) {
+        return parseIgnoreMillis(datetime, DEFAULT_DATE_TIME_PATTERN);
+    }
+
+    /**
      * 将日期时间字符串解析为{@link LocalDateTime}对象，并根据目标时区进行转换。
      *
      * @param datetime     日期时间字符串。
-     * @param formatter    日期时间的格式化器。
+     * @param pattern      日期时间的格式化模式。
      * @param targetZoneId 目标时区。
      * @return 转换后的 {@link LocalDateTime} 对象。
      */
-    public static LocalDateTime toLocalDateTime(final String datetime, DateTimeFormatter formatter, ZoneId targetZoneId) {
-        LocalDateTime localDateTime = LocalDateTime.parse(datetime, formatter);
+    public static LocalDateTime toLocalDateTime(final String datetime, final String pattern, ZoneId targetZoneId) {
+        LocalDateTime localDateTime = parseIgnoreMillis(datetime, pattern);
         return toLocalDateTime(localDateTime, targetZoneId);
     }
 
@@ -185,16 +213,16 @@ public final class DateTime {
     /**
      * 判断给定的日期时间字符串是否可以被解析为{@link LocalDateTime}对象。
      * <p>
-     * 该方法尝试使用{@link #DEFAULT_DATE_TIME_FORMATTER}格式化器解析给定的日期时间字符串。
      * 如果解析成功，返回{@code true}；否则，返回{@code false}。
      * </p>
      *
      * @param datetime 输入的日期时间字符串。
      * @return 如果输入的日期时间字符串可以解析为 {@link LocalDateTime} 对象，则返回{@code true}；否则返回{@code false}。
+     * @see DateTime#parseIgnoreMillis(String)
      */
     public static boolean isParseableLocalDateTime(final String datetime) {
         try {
-            LocalDateTime.parse(datetime, DEFAULT_DATE_TIME_FORMATTER);
+            parseIgnoreMillis(datetime);
             return true;
         } catch (DateTimeParseException e) {
             return false;

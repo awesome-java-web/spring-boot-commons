@@ -53,6 +53,16 @@ public final class Numbers {
     }
 
     /**
+     * 判断给定的{@link BigDecimal}数字是否等于零
+     *
+     * @param number 要检查的{@link BigDecimal}数字，可能为{@code null}
+     * @return 如果 {@code number} 为零，返回 {@code true}，否则返回 {@code false}
+     */
+    public static boolean isZero(final BigDecimal number) {
+        return number != null && number.compareTo(BigDecimal.ZERO) == 0;
+    }
+
+    /**
      * 判断给定的{@link BigDecimal}数字是否大于零，即是否为正数
      *
      * @param number 要检查的{@link BigDecimal}数字，不能为{@code null}
