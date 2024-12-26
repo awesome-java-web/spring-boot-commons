@@ -74,6 +74,11 @@ public enum Chars {
      */
     WHITESPACE(' '),
 
+    /**
+     * MySQL关键字转义符(反引号)
+     */
+    BACKTICK('`'),
+
     ;
 
     /**

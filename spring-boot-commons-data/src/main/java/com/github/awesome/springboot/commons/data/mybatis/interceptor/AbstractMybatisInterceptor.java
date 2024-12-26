@@ -1,6 +1,7 @@
 package com.github.awesome.springboot.commons.data.mybatis.interceptor;
 
 import com.github.awesome.springboot.commons.base.Chars;
+import com.github.awesome.springboot.commons.base.Strings;
 import com.github.awesome.springboot.commons.data.mybatis.enums.SqlKeywords;
 import com.google.common.base.CaseFormat;
 import com.google.common.cache.Cache;
@@ -93,7 +94,10 @@ public abstract class AbstractMybatisInterceptor implements Interceptor {
             final boolean isJoinKeyword = SqlKeywords.JOIN.name().equalsIgnoreCase(tokens[i]);
             final boolean isUpdateKeyword = SqlCommandType.UPDATE.name().equalsIgnoreCase(tokens[i]);
             if (isIntoKeyword || isFromKeyword || isJoinKeyword || isUpdateKeyword) {
-                final String tableName = tokens[i + 1];
+                String tableName = tokens[i + 1];
+                if (tableName.contains(Chars.BACKTICK.stringValue())) {
+                    tableName = tableName.replace(Chars.BACKTICK.stringValue(), Strings.EMPTY);
+                }
                 tableNames.add(tableName);
             }
         }

@@ -17,6 +17,7 @@ class CharsTest {
         assertEquals('%', Chars.PERCENT.charValue())
         assertEquals('*', Chars.WILDCARD.charValue())
         assertEquals(' ', Chars.WHITESPACE.charValue())
+        assertEquals('`', Chars.BACKTICK.charValue())
 
         assertEquals("@", Chars.AT.stringValue())
         assertEquals("&", Chars.AND.stringValue())
@@ -28,6 +29,7 @@ class CharsTest {
         assertEquals("%", Chars.PERCENT.stringValue())
         assertEquals("*", Chars.WILDCARD.stringValue())
         assertEquals(" ", Chars.WHITESPACE.stringValue())
+        assertEquals("`", Chars.BACKTICK.stringValue())
     }
 
 }
