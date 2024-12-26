@@ -1,6 +1,6 @@
 package com.github.awesome.springboot.commons.data.mybatis.interceptor
 
-data class MybatisTestEntity(
+data class MybatisTestEntityUser(
     var id: Long,
     var name: String,
     var age: Int,

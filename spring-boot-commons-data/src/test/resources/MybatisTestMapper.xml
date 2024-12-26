@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.awesome.springboot.commons.data.mybatis.interceptor.MybatisTestMapper">
-    <resultMap id="userResultMap" type="com.github.awesome.springboot.commons.data.mybatis.interceptor.MybatisTestEntity">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="age" property="age"/>
-        <result column="email" property="email"/>
-        <result column="city" property="city"/>
-        <result column="country" property="country"/>
-    </resultMap>
 
     <update id="createTable">
         CREATE TABLE IF NOT EXISTS `user` (
@@ -19,14 +11,21 @@
         `city` VARCHAR(255) DEFAULT NULL,
         `country` VARCHAR(255) DEFAULT NULL,
         PRIMARY KEY (`id`)
+        );
+
+        CREATE TABLE IF NOT EXISTS `score` (
+        `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+        `user_id` BIGINT(20) DEFAULT NULL,
+        `score` INT(11) DEFAULT NULL,
+        PRIMARY KEY (`id`)
         )
     </update>
 
-    <insert id="insertUser" parameterType="com.github.awesome.springboot.commons.data.mybatis.interceptor.MybatisTestEntity">
+    <insert id="insertUser" parameterType="com.github.awesome.springboot.commons.data.mybatis.interceptor.MybatisTestEntityUser">
         INSERT INTO `user` (name, age, email, city, country) VALUES (#{name}, #{age}, #{email}, #{city}, #{country})
     </insert>
 
-    <select id="selectUser" resultType="com.github.awesome.springboot.commons.data.mybatis.interceptor.MybatisTestEntity">
+    <select id="selectUser" resultType="com.github.awesome.springboot.commons.data.mybatis.interceptor.MybatisTestEntityUser">
         SELECT * FROM `user` WHERE id = #{id}
     </select>
 
@@ -37,4 +36,9 @@
     <delete id="deleteUser">
         DELETE FROM `user` WHERE id = #{id}
     </delete>
+
+    <select id="selectUserNameOfScoreGreaterThan50">
+        SELECT u.name FROM `user` u LEFT JOIN score s ON u.id = s.user_id WHERE s.score > 50
+    </select>
+
 </mapper>

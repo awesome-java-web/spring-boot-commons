@@ -35,10 +35,11 @@ class MybatisParameterInterceptorTest {
     }
 
     @Test
-    fun testSqlStatement() {
+    fun testForUserDefinedObject() {
         val session = sqlSessionFactory.openSession()
         val mapper = session.getMapper(MybatisTestMapper::class.java)
-        val user = MybatisTestEntity(
+
+        var user = MybatisTestEntityUser(
             id = 1,
             name = "Alice",
             age = 30,
@@ -47,18 +48,14 @@ class MybatisParameterInterceptorTest {
             country = "USA"
         )
 
-        val insert = mapper.insertUser(user)
-        println("insert: $insert")
+        mapper.insertUser(user)
+        user = mapper.selectUser(1)
+        user.age = 18
+        mapper.updateUser(user)
+        mapper.deleteUser(1)
 
-        val select = mapper.selectUser(1)
-        println("select: $select")
-
-        select.age = 18
-        val update = mapper.updateUser(user)
-        println("update: $update")
-
-        val delete = mapper.deleteUser(1)
-        println("delete: $delete")
+        // 测试从带有 JOIN 关键字的 SQL 语句中解析表名，以及解析表名时应该忽略转义符
+        mapper.selectUserNameOfScoreGreaterThan50()
 
         session.commit()
         session.close()

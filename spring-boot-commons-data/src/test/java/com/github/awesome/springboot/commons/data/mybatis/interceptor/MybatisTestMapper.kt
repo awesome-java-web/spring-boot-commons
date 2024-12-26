@@ -4,12 +4,14 @@ interface MybatisTestMapper {
 
     fun createTable()
 
-    fun insertUser(user: MybatisTestEntity): Int
+    fun insertUser(user: MybatisTestEntityUser): Int
 
-    fun selectUser(id: Long): MybatisTestEntity
+    fun selectUser(id: Long): MybatisTestEntityUser
 
-    fun updateUser(user: MybatisTestEntity): Int
+    fun updateUser(user: MybatisTestEntityUser): Int
 
     fun deleteUser(id: Long): Int
+
+    fun selectUserNameOfScoreGreaterThan50(): String
 
 }
