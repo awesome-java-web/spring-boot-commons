@@ -107,19 +107,19 @@ public abstract class AbstractMybatisInterceptor implements Interceptor {
     /**
      * 根据不同的字段类型（{@link Map}、{@link Iterable}或自定义对象）对字段进行处理。
      *
-     * @param handler   {@link MybatisFieldHandler}，用于处理字段的具体逻辑。
-     * @param tableName 表名，指明当前处理字段所属的表。
-     * @param value     需要处理的字段值，可以是{@link Map}、{@link Iterable}或自定义对象。
+     * @param handler                 {@link MybatisFieldHandler}用于处理字段的具体逻辑。
+     * @param tableName               表名，指明当前处理字段所属的表。
+     * @param sqlParameterOrResultSet Mybatis Mapper 方法的入参或返回值对象，可以是{@link Map}、{@link Iterable}或自定义对象。
      * @throws IllegalAccessException 如果无法访问字段时抛出此异常。
      */
     @SuppressWarnings("unchecked")
-    protected void doIntercept(MybatisFieldHandler handler, final String tableName, Object value) throws IllegalAccessException {
-        if (value instanceof Map) {
-            resolveMap(handler, tableName, (Map<String, Object>) value);
-        } else if (value instanceof Iterable) {
-            resolveIterable(handler, tableName, (Iterable<?>) value);
-        } else if (isUserDefinedObject(value)) {
-            resolveUserDefinedObject(handler, tableName, value);
+    protected void doIntercept(MybatisFieldHandler handler, final String tableName, Object sqlParameterOrResultSet) throws IllegalAccessException {
+        if (sqlParameterOrResultSet instanceof Map) {
+            resolveMap(handler, tableName, (Map<String, Object>) sqlParameterOrResultSet);
+        } else if (sqlParameterOrResultSet instanceof Iterable) {
+            resolveIterable(handler, tableName, (Iterable<?>) sqlParameterOrResultSet);
+        } else if (isUserDefinedObject(sqlParameterOrResultSet)) {
+            resolveUserDefinedObject(handler, tableName, sqlParameterOrResultSet);
         }
     }
 

@@ -14,4 +14,12 @@ interface MybatisTestMapper {
 
     fun selectUserNameOfScoreGreaterThan50(): String
 
+    fun insertSimpleMap(userInfo: Map<String, Any>): Int
+
+    fun insertEntityValueMap(userInfo: Map<String, MybatisTestEntityUser>): Int
+
+    fun insertEntityListValueMap(userInfo: Map<String, List<MybatisTestEntityUser>>): Int
+
+    fun insertMapList(userInfoList: List<Map<String, Any>>): Int
+
 }
