@@ -284,7 +284,7 @@ public abstract class AbstractMybatisInterceptor implements Interceptor {
             try {
                 result = clazz.getDeclaredFields();
                 declaredFieldsCache.put(clazz, (result.length == 0 ? NO_FIELDS : result));
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 final String error = String.format("Failed to introspect Class [%s] from ClassLoader [%s]", clazz.getName(), clazz.getClassLoader());
                 throw new IllegalStateException(error, e);
             }

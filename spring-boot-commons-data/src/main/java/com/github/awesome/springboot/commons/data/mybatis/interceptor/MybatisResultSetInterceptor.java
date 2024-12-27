@@ -9,7 +9,6 @@ import org.apache.ibatis.plugin.Signature;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -61,16 +60,6 @@ public class MybatisResultSetInterceptor extends AbstractMybatisInterceptor {
             }
         }
         return resultList;
-    }
-
-    @Override
-    public Object plugin(Object target) {
-        return super.plugin(target);
-    }
-
-    @Override
-    public void setProperties(Properties properties) {
-        super.setProperties(properties);
     }
 
     /**

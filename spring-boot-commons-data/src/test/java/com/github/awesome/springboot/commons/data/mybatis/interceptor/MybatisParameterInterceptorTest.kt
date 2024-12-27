@@ -5,7 +5,6 @@ import org.apache.ibatis.session.SqlSessionFactory
 import org.apache.ibatis.session.SqlSessionFactoryBuilder
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.util.*
 
 class MybatisParameterInterceptorTest {
 
@@ -17,11 +16,9 @@ class MybatisParameterInterceptorTest {
         sqlSessionFactory = SqlSessionFactoryBuilder().build(mybatisConfigFileInputStream)
 
         val mybatisParameterInterceptor = MybatisParameterInterceptor()
-        mybatisParameterInterceptor.setProperties(Properties())
         mybatisParameterInterceptor.registerParameterFieldHandler(MybatisTestParameterFieldHandler())
 
         val mybatisResultSetInterceptor = MybatisResultSetInterceptor()
-        mybatisResultSetInterceptor.setProperties(Properties())
         mybatisResultSetInterceptor.registerResultSetFieldHandler(MybatisTestResultSetFieldHandler())
 
         sqlSessionFactory.configuration.addInterceptor(mybatisParameterInterceptor)
