@@ -28,7 +28,11 @@ public class SftpConnectionPool {
 
     private void initializeConnectionPool() {
         for (int i = 0, corePoolSize = config.getCorePoolSize(); i < corePoolSize; i++) {
-            pool.offer(createChannel());
+            ChannelSftp channel = createChannel();
+            final boolean offered = pool.offer(channel);
+            if (!offered) {
+                channel.disconnect();
+            }
         }
     }
 
@@ -75,6 +79,7 @@ public class SftpConnectionPool {
                 try {
                     pool.poll(config.getAcquireIdleConnectionTimeoutMillis(), TimeUnit.MILLISECONDS);
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     throw new SftpException("Failed to borrow SFTP channel", e);
                 }
             }
@@ -88,7 +93,10 @@ public class SftpConnectionPool {
         }
 
         if (pool.size() < config.getCorePoolSize()) {
-            pool.offer(channel);
+            final boolean offered = pool.offer(channel);
+            if (!offered) {
+                channel.disconnect();
+            }
         } else {
             channel.disconnect();
         }
