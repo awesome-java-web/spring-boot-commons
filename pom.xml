@@ -61,6 +61,7 @@
         <module>spring-boot-commons-base</module>
         <module>spring-boot-commons-data</module>
         <module>spring-boot-commons-scripting</module>
+        <module>spring-boot-commons-sftp</module>
     </modules>
 
     <properties>
@@ -79,6 +80,8 @@
         <fastjson.version>1.2.83</fastjson.version>
         <junit5.version>5.10.2</junit5.version>
         <h2.version>2.2.224</h2.version>
+        <jsch.version>0.2.21</jsch.version>
+        <sshd-sftp.version>2.14.0</sshd-sftp.version>
         <!--============================= plugin version numbers ===============================-->
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
@@ -217,6 +220,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.sshd</groupId>
+            <artifactId>sshd-sftp</artifactId>
+            <version>${sshd-sftp.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
@@ -272,6 +281,11 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.mwiede</groupId>
+                <artifactId>jsch</artifactId>
+                <version>${jsch.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
