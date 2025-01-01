@@ -77,7 +77,7 @@ public class SftpConnectionPool {
                 channel = createChannel();
             } else {
                 try {
-                    pool.poll(config.getAcquireIdleConnectionTimeoutMillis(), TimeUnit.MILLISECONDS);
+                    channel = pool.poll(config.getAcquireIdleConnectionTimeoutMillis(), TimeUnit.MILLISECONDS);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     throw new SftpException("Failed to borrow SFTP channel", e);
