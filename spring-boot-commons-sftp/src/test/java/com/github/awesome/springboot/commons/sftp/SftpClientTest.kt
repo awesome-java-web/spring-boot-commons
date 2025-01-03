@@ -8,9 +8,11 @@ import org.apache.sshd.sftp.server.SftpSubsystemFactory
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty
 import java.nio.file.Files
 import java.nio.file.Paths
 
+@DisabledIfSystemProperty(named = "os.name", matches = "Windows.*")
 class SftpClientTest {
 
     companion object {
