@@ -138,4 +138,36 @@ class DateTimeTest {
         assertEquals(localDate3, DateTime.min(localDate1, localDate2, localDate3))
     }
 
+    @Test
+    fun testDiffDays() {
+        val start = "2024-11-06 00:00:00"
+        val end = "2024-11-07 23:59:59"
+        assertEquals(2, DateTime.diffDays(start, end))
+        assertEquals(2, DateTime.diffDays(end, start))
+    }
+
+    @Test
+    fun testStartOfToday() {
+        val startOfToday = DateTime.startOfToday()
+        val now = LocalDateTime.now()
+        assertEquals(now.year, startOfToday.substring(0, 4).toInt())
+        assertEquals(now.monthValue, startOfToday.substring(5, 7).toInt())
+        assertEquals(now.dayOfMonth, startOfToday.substring(8, 10).toInt())
+        assertEquals(0, startOfToday.substring(11, 13).toInt())
+        assertEquals(0, startOfToday.substring(14, 16).toInt())
+        assertEquals(0, startOfToday.substring(17, 19).toInt())
+    }
+
+    @Test
+    fun testEndOfToday() {
+        val endOfToday = DateTime.endOfToday()
+        val now = LocalDateTime.now()
+        assertEquals(now.year, endOfToday.substring(0, 4).toInt())
+        assertEquals(now.monthValue, endOfToday.substring(5, 7).toInt())
+        assertEquals(now.dayOfMonth, endOfToday.substring(8, 10).toInt())
+        assertEquals(23, endOfToday.substring(11, 13).toInt())
+        assertEquals(59, endOfToday.substring(14, 16).toInt())
+        assertEquals(59, endOfToday.substring(17, 19).toInt())
+    }
+
 }

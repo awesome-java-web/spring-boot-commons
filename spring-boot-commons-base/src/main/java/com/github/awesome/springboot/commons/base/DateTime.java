@@ -5,6 +5,7 @@ import com.google.common.annotations.VisibleForTesting;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 /**
@@ -19,6 +20,11 @@ public final class DateTime {
      * 默认的日期时间格式化模式
      */
     public static final String DEFAULT_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
+    /**
+     * 默认的日期时间格式化器
+     */
+    public static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_PATTERN);
 
     /**
      * 私有构造函数，防止该工具类被实例化。
@@ -322,6 +328,28 @@ public final class DateTime {
             min = dt.isBefore(min) ? dt : min;
         }
         return min;
+    }
+
+    public static long diffDays(final String dateTime, final String anotherDateTime) {
+        if (!isParseableLocalDateTime(dateTime)) {
+            throw new IllegalArgumentException("Unsupported date time format: " + dateTime);
+        }
+        if (!isParseableLocalDateTime(anotherDateTime)) {
+            throw new IllegalArgumentException("Unsupported date time format: " + anotherDateTime);
+        }
+        LocalDateTime start = parseIgnoreMillis(dateTime);
+        LocalDateTime end = parseIgnoreMillis(anotherDateTime);
+        final long days = Math.abs(ChronoUnit.DAYS.between(start, end));
+        // We need 'anotherDateTime' is inclusive
+        return days + 1;
+    }
+
+    public static String startOfToday() {
+        return LocalDate.now().atStartOfDay().format(DEFAULT_DATE_TIME_FORMATTER);
+    }
+
+    public static String endOfToday() {
+        return LocalDate.now().atTime(23, 59, 59).format(DEFAULT_DATE_TIME_FORMATTER);
     }
 
 }
