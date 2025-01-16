@@ -88,4 +88,14 @@ public final class FastJson {
         return text == null || text.trim().isEmpty() ? new JSONObject() : JSON.parseObject(text);
     }
 
+    /**
+     * 解析给定的 JSON 字符串。如果字符串为{@code null}或为空字符串(包括仅含空白字符的字符串)，则返回一个新的空的{@link JSONArray}。
+     *
+     * @param text 要解析的 JSON 字符串
+     * @return 如果字符串为 {@code null} 或为空字符串(包括仅含空白字符的字符串)，则返回一个新的空的{@link JSONArray}；否则返回解析后的{@link JSONArray}。
+     */
+    public static JSONArray parseOrReturnEmptyJsonArray(final String text) {
+        return text == null || text.trim().isEmpty() ? new JSONArray() : JSON.parseArray(text);
+    }
+
 }
