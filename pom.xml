@@ -82,6 +82,7 @@
         <h2.version>2.2.224</h2.version>
         <jsch.version>0.2.21</jsch.version>
         <sshd-sftp.version>2.14.0</sshd-sftp.version>
+        <slf4j-api.version>2.0.16</slf4j-api.version>
         <!--============================= plugin version numbers ===============================-->
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
@@ -286,6 +287,11 @@
                 <groupId>com.github.mwiede</groupId>
                 <artifactId>jsch</artifactId>
                 <version>${jsch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
