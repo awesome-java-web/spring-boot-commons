@@ -58,4 +58,12 @@ class FastJsonTest {
         assertEquals(JSONObject(), FastJson.parseOrReturnEmptyJsonObject("{}"))
     }
 
+    @Test
+    fun testParseOrReturnEmptyJsonArray() {
+        assertEquals(JSONArray(), FastJson.parseOrReturnEmptyJsonArray(null))
+        assertEquals(JSONArray(), FastJson.parseOrReturnEmptyJsonArray(Strings.EMPTY))
+        assertEquals(JSONArray(), FastJson.parseOrReturnEmptyJsonArray(Chars.WHITESPACE.stringValue()))
+        assertEquals(JSONArray(), FastJson.parseOrReturnEmptyJsonArray("[]"))
+    }
+
 }

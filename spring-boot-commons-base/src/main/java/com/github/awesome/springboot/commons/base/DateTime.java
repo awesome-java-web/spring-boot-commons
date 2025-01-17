@@ -330,6 +330,20 @@ public final class DateTime {
         return min;
     }
 
+    /**
+     * 计算两个日期时间之间的天数差（包含结束日期），但仅适用于两个日期时间差为 24 小时的整数倍的情况。
+     * <p>
+     * 该方法首先验证传入的两个日期时间字符串是否符合可解析的格式。如果格式不正确，将抛出{@link IllegalArgumentException}异常。
+     * 接着，方法会解析日期时间字符串并计算它们之间的小时数差。然后，检查小时差是否为 24 小时的整数倍。如果是，则将小时差转换为天数并返回。
+     * 如果小时差加 1 后是 24 小时的整数倍，则同样将其转换为天数并返回。
+     * 如果两者之间的差值不是 24 小时的整数倍，方法将抛出异常。
+     * </p>
+     *
+     * @param dateTime        第一个日期时间字符串，必须是可解析的格式。
+     * @param anotherDateTime 第二个日期时间字符串，必须是可解析的格式。
+     * @return 两个日期时间之间的天数差（包含结束日期），只会返回差值为 24 小时的整数倍的天数。
+     * @throws IllegalArgumentException 如果日期时间格式不正确，或两个日期时间的差值不是 24 小时的整数倍，抛出该异常。
+     */
     public static long diffDays(final String dateTime, final String anotherDateTime) {
         if (!isParseableLocalDateTime(dateTime)) {
             throw new IllegalArgumentException("Unsupported date time format: " + dateTime);
@@ -337,17 +351,44 @@ public final class DateTime {
         if (!isParseableLocalDateTime(anotherDateTime)) {
             throw new IllegalArgumentException("Unsupported date time format: " + anotherDateTime);
         }
+
         LocalDateTime start = parseIgnoreMillis(dateTime);
         LocalDateTime end = parseIgnoreMillis(anotherDateTime);
-        final long days = Math.abs(ChronoUnit.DAYS.between(start, end));
-        // We need 'anotherDateTime' is inclusive
-        return days + 1;
+        final long diffHours = Math.abs(ChronoUnit.HOURS.between(start, end));
+
+        if (diffHours % 24 == 0) {
+            return diffHours / 24;
+        }
+
+        if ((diffHours + 1) % 24 == 0) {
+            return (diffHours + 1) / 24;
+        }
+
+        throw new IllegalArgumentException("The difference between two date time is not a multiple of 24 hours");
     }
 
+    /**
+     * 获取今天开始时的日期时间（即00:00:00），并将其格式化为指定的字符串格式。
+     * <p>
+     * 该方法通过{@link LocalDate#now()}获取当前日期，然后调用{@link LocalDate#atStartOfDay()}方法获取当天的开始时间（00:00:00）。
+     * 随后，使用预定义的日期时间格式化器{@link #DEFAULT_DATE_TIME_FORMATTER}将其格式化为字符串。
+     * </p>
+     *
+     * @return 格式化后的字符串，表示今天开始时的日期时间。
+     */
     public static String startOfToday() {
         return LocalDate.now().atStartOfDay().format(DEFAULT_DATE_TIME_FORMATTER);
     }
 
+    /**
+     * 获取今天结束时的日期时间（即23:59:59），并将其格式化为指定的字符串格式。
+     * <p>
+     * 该方法通过{@link LocalDate#now()}获取当前日期，然后使用{@link LocalDate#atTime(int, int, int)}方法将时间设置为 23:59:59。
+     * 随后，使用预定义的日期时间格式化器{@link #DEFAULT_DATE_TIME_FORMATTER}将其格式化为字符串。
+     * </p>
+     *
+     * @return 格式化后的字符串，表示今天结束时的日期时间。
+     */
     public static String endOfToday() {
         return LocalDate.now().atTime(23, 59, 59).format(DEFAULT_DATE_TIME_FORMATTER);
     }

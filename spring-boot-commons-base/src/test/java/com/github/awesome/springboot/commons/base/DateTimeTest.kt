@@ -140,10 +140,26 @@ class DateTimeTest {
 
     @Test
     fun testDiffDays() {
-        val start = "2024-11-06 00:00:00"
-        val end = "2024-11-07 23:59:59"
-        assertEquals(2, DateTime.diffDays(start, end))
-        assertEquals(2, DateTime.diffDays(end, start))
+        assertEquals(2, DateTime.diffDays("2024-11-06 00:00:00", "2024-11-07 23:59:59"))
+        assertEquals(1, DateTime.diffDays("2024-11-06 00:00:00", "2024-11-06 23:59:59"))
+        assertEquals(0, DateTime.diffDays("2024-11-06 00:00:00", "2024-11-06 00:00:00"))
+        assertEquals(1, DateTime.diffDays("2024-11-06 23:59:59", "2024-11-06 00:00:00"))
+        assertEquals(1, DateTime.diffDays("2024-11-07 11:00:00", "2024-11-06 11:00:00"))
+
+        val e1 = assertThrows<IllegalArgumentException>() {
+            DateTime.diffDays("notParsableDateTimeString", "2024-11-06 00:00:00")
+        }
+        assertEquals("Unsupported date time format: notParsableDateTimeString", e1.message)
+
+        val e2 = assertThrows<IllegalArgumentException>() {
+            DateTime.diffDays("2024-11-06 00:00:00", "notParsableDateTimeString")
+        }
+        assertEquals("Unsupported date time format: notParsableDateTimeString", e2.message)
+
+        val e3 = assertThrows<IllegalArgumentException>() {
+            DateTime.diffDays("2024-11-06 01:02:03", "2024-11-06 02:03:04")
+        }
+        assertEquals("The difference between two date time is not a multiple of 24 hours", e3.message)
     }
 
     @Test
