@@ -346,10 +346,10 @@ public final class DateTime {
      */
     public static long diffDays(final String dateTime, final String anotherDateTime) {
         if (!isParseableLocalDateTime(dateTime)) {
-            throw new IllegalArgumentException("Unsupported date time format: " + dateTime);
+            throw new IllegalArgumentException("For input 'dateTime': " + dateTime);
         }
         if (!isParseableLocalDateTime(anotherDateTime)) {
-            throw new IllegalArgumentException("Unsupported date time format: " + anotherDateTime);
+            throw new IllegalArgumentException("For input 'anotherDateTime': " + anotherDateTime);
         }
 
         LocalDateTime start = parseIgnoreMillis(dateTime);
