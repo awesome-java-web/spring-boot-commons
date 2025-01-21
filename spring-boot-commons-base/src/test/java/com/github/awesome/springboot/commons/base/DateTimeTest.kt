@@ -149,12 +149,12 @@ class DateTimeTest {
         val e1 = assertThrows<IllegalArgumentException>() {
             DateTime.diffDays("notParsableDateTimeString", "2024-11-06 00:00:00")
         }
-        assertEquals("Unsupported date time format: notParsableDateTimeString", e1.message)
+        assertEquals("For input 'dateTime': notParsableDateTimeString", e1.message)
 
         val e2 = assertThrows<IllegalArgumentException>() {
             DateTime.diffDays("2024-11-06 00:00:00", "notParsableDateTimeString")
         }
-        assertEquals("Unsupported date time format: notParsableDateTimeString", e2.message)
+        assertEquals("For input 'anotherDateTime': notParsableDateTimeString", e2.message)
 
         val e3 = assertThrows<IllegalArgumentException>() {
             DateTime.diffDays("2024-11-06 01:02:03", "2024-11-06 02:03:04")
