@@ -42,4 +42,22 @@ class ListsTest {
         assertEquals(1, Lists.firstOf(list).orElse(0))
     }
 
+    @Test
+    fun testAddIfNotBlank() {
+        val list: List<String> = mutableListOf()
+        Lists.addIfNotBlank(list, Strings.EMPTY)
+        assertEquals(0, list.size)
+
+        Lists.addIfNotBlank(list, Chars.WHITESPACE.stringValue())
+        assertEquals(0, list.size)
+
+        Lists.addIfNotBlank(list, "a")
+        assertEquals(1, list.size)
+        assertEquals("a", list[0])
+
+        Lists.addIfNotBlank(list, "b")
+        assertEquals(2, list.size)
+        assertEquals("b", list[1])
+    }
+
 }

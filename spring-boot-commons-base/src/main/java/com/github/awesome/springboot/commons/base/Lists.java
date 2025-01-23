@@ -50,4 +50,21 @@ public final class Lists {
         return safeGet(list, 0);
     }
 
+    /**
+     * 如果给定的字符串元素不为空且不只包含空白字符，则将其添加到列表中。
+     * <p>
+     * 该方法首先检查输入的字符串元素是否为{@code null}或仅包含空白字符（例如空格、制表符等）。
+     * 如果满足这些条件，方法会直接返回，不进行任何操作；否则，将该元素添加到提供的列表中。
+     * </p>
+     *
+     * @param list    要添加元素的列表，不能为{@code null}。
+     * @param element 要检查并添加的字符串。如果该元素为空或仅包含空白字符，则不会被添加。
+     */
+    public static void addIfNotBlank(List<Object> list, final String element) {
+        if (element == null || element.trim().isEmpty()) {
+            return;
+        }
+        list.add(element);
+    }
+
 }
