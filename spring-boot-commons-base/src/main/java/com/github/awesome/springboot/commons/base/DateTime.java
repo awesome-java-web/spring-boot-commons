@@ -343,7 +343,7 @@ public final class DateTime {
      * @return 如果两个日期时间之间的时间差不超过指定的天数范围，返回{@code true}否则返回{@code false}。
      * @throws IllegalArgumentException 如果{@code startDateTime}无法解析，
      *                                  或者{@code endDateTime}无法解析，
-     *                                  或者{@code days} <= 0，
+     *                                  或者{@code days}不是正整数，
      *                                  或者{@code startDateTime}晚于{@code endDateTime}。
      */
     public static boolean isWithinDays(final String startDateTime, final String endDateTime, final int days) {
