@@ -12,7 +12,7 @@ class NumbersTest {
 
     @Test
     fun testNewInstance() {
-        val e = assertThrows<UnsupportedOperationException>() {
+        val e = assertThrows<UnsupportedOperationException> {
             Numbers()
         }
         assertEquals("Utility class should not be instantiated", e.message)

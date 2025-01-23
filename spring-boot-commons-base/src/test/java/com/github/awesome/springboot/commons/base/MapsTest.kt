@@ -9,7 +9,7 @@ class MapsTest {
 
     @Test
     fun testNewInstance() {
-        val e = assertThrows<UnsupportedOperationException>() {
+        val e = assertThrows<UnsupportedOperationException> {
             Maps()
         }
         assertEquals("Utility class should not be instantiated", e.message)

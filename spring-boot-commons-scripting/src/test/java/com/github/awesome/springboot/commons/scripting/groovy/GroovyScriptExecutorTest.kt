@@ -14,12 +14,12 @@ class GroovyScriptExecutorTest {
 
     @Test
     fun testExecute() {
-        val e1 = assertThrows<InvalidGroovyScriptException>() {
+        val e1 = assertThrows<InvalidGroovyScriptException> {
             groovyScriptExecutor.execute(null, null)
         }
         assertEquals("Groovy script is null", e1.message)
 
-        val e2 = assertThrows<InvalidGroovyScriptException>() {
+        val e2 = assertThrows<InvalidGroovyScriptException> {
             groovyScriptExecutor.execute("", null)
         }
         assertEquals("Groovy script is empty", e2.message)
@@ -41,12 +41,12 @@ class GroovyScriptExecutorTest {
         val result2 = groovyScriptExecutor.execute(groovyClassScript, "executeWithParam", "Groovy!")
         assertEquals("Hello, Groovy!", result2)
 
-        val e3 = assertThrows<GroovyScriptParseException>() {
+        val e3 = assertThrows<GroovyScriptParseException> {
             groovyScriptExecutor.execute("interface GroovyInterface {}", "execute")
         }
         assertTrue { e3.message!!.startsWith("Failed to parse groovy class script") }
 
-        val e4 = assertThrows<GroovyObjectInvokeMethodException>() {
+        val e4 = assertThrows<GroovyObjectInvokeMethodException> {
             groovyScriptExecutor.execute(groovyClassScript, "noSuchMethod")
         }
         assertTrue { e4.message!!.startsWith("Failed to invoke groovy method") }
@@ -54,12 +54,12 @@ class GroovyScriptExecutorTest {
 
     @Test
     fun testEvaluate() {
-        val e1 = assertThrows<InvalidGroovyScriptException>() {
+        val e1 = assertThrows<InvalidGroovyScriptException> {
             groovyScriptExecutor.evaluate(null, null)
         }
         assertEquals("Groovy script is null", e1.message)
 
-        val e2 = assertThrows<InvalidGroovyScriptException>() {
+        val e2 = assertThrows<InvalidGroovyScriptException> {
             groovyScriptExecutor.evaluate("", null)
         }
         assertEquals("Groovy script is empty", e2.message)
@@ -79,7 +79,7 @@ class GroovyScriptExecutorTest {
         val result2 = groovyScriptExecutor.evaluate(groovyScript, "executeWithParam", "Groovy!")
         assertEquals("Hello, Groovy!", result2)
 
-        val e3 = assertThrows<GroovyObjectInvokeMethodException>() {
+        val e3 = assertThrows<GroovyObjectInvokeMethodException> {
             groovyScriptExecutor.evaluate(groovyScript, "noSuchMethod")
         }
         assertTrue { e3.message!!.startsWith("Failed to invoke groovy method") }
@@ -100,7 +100,7 @@ class GroovyScriptExecutorTest {
                 Runtime.getRuntime().exec("ls")
             }
         """
-        val e1 = assertThrows<GroovyObjectInvokeMethodException>() {
+        val e1 = assertThrows<GroovyObjectInvokeMethodException> {
             groovyScriptExecutor.evaluate(groovyScript, "unsafeSystemMethod")
         }
         assertTrue { e1.message!!.contains("not allowed in your groovy code") }
@@ -108,7 +108,7 @@ class GroovyScriptExecutorTest {
         val result1 = groovyScriptExecutor.evaluate(groovyScript, "safeSystemMethod")
         assertTrue { result1 is Long && result1 > 0 }
 
-        val e2 = assertThrows<GroovyObjectInvokeMethodException>() {
+        val e2 = assertThrows<GroovyObjectInvokeMethodException> {
             groovyScriptExecutor.evaluate(groovyScript, "unsafeRuntimeClass")
         }
         assertTrue { e2.message!!.contains("not allowed in your groovy code") }

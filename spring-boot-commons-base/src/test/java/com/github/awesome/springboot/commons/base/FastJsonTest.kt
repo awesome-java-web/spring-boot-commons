@@ -10,7 +10,7 @@ class FastJsonTest {
 
     @Test
     fun testNewInstance() {
-        val e = assertThrows<UnsupportedOperationException>() {
+        val e = assertThrows<UnsupportedOperationException> {
             FastJson()
         }
         assertEquals("Utility class should not be instantiated", e.message)

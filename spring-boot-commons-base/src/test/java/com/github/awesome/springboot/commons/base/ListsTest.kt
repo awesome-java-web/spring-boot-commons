@@ -9,7 +9,7 @@ class ListsTest {
 
     @Test
     fun testNewInstance() {
-        val e = assertThrows<UnsupportedOperationException>() {
+        val e = assertThrows<UnsupportedOperationException> {
             Lists()
         }
         assertEquals("Utility class should not be instantiated", e.message)
