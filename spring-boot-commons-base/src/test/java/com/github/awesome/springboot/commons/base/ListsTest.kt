@@ -45,6 +45,10 @@ class ListsTest {
     @Test
     fun testAddIfNotBlank() {
         val list: List<String> = mutableListOf()
+
+        Lists.addIfNotBlank(list, null)
+        assertEquals(0, list.size)
+
         Lists.addIfNotBlank(list, Strings.EMPTY)
         assertEquals(0, list.size)
 
