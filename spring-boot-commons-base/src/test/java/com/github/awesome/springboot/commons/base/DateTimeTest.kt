@@ -21,7 +21,7 @@ class DateTimeTest {
 
     @Test
     fun testNewInstance() {
-        val e = assertThrows<UnsupportedOperationException>() {
+        val e = assertThrows<UnsupportedOperationException> {
             DateTime()
         }
         assertEquals("Utility class should not be instantiated", e.message)
@@ -139,27 +139,39 @@ class DateTimeTest {
     }
 
     @Test
-    fun testDiffDays() {
-        assertEquals(2, DateTime.diffDays("2024-11-06 00:00:00", "2024-11-07 23:59:59"))
-        assertEquals(1, DateTime.diffDays("2024-11-06 00:00:00", "2024-11-06 23:59:59"))
-        assertEquals(0, DateTime.diffDays("2024-11-06 00:00:00", "2024-11-06 00:00:00"))
-        assertEquals(1, DateTime.diffDays("2024-11-06 23:59:59", "2024-11-06 00:00:00"))
-        assertEquals(1, DateTime.diffDays("2024-11-07 11:00:00", "2024-11-06 11:00:00"))
-
-        val e1 = assertThrows<IllegalArgumentException>() {
-            DateTime.diffDays("notParsableDateTimeString", "2024-11-06 00:00:00")
+    fun testIsWithinDays() {
+        val e1 = assertThrows<IllegalArgumentException> {
+            DateTime.isWithinDays("notParsableDateTimeString", "2024-11-07 00:00:00", 1)
         }
-        assertEquals("For input 'dateTime': notParsableDateTimeString", e1.message)
+        assertEquals("For input 'startDateTime': notParsableDateTimeString", e1.message)
 
-        val e2 = assertThrows<IllegalArgumentException>() {
-            DateTime.diffDays("2024-11-06 00:00:00", "notParsableDateTimeString")
+        val e2 = assertThrows<IllegalArgumentException> {
+            DateTime.isWithinDays("2024-11-07 00:00:00", "notParsableDateTimeString", 1)
         }
-        assertEquals("For input 'anotherDateTime': notParsableDateTimeString", e2.message)
+        assertEquals("For input 'endDateTime': notParsableDateTimeString", e2.message)
 
-        val e3 = assertThrows<IllegalArgumentException>() {
-            DateTime.diffDays("2024-11-06 01:02:03", "2024-11-06 02:03:04")
+        val e3 = assertThrows<IllegalArgumentException> {
+            DateTime.isWithinDays("2024-11-07 00:00:00", "2024-11-07 00:00:00", -1)
         }
-        assertEquals("The difference between two date time is not a multiple of 24 hours", e3.message)
+        assertEquals("For input 'days': -1", e3.message)
+
+        val e4 = assertThrows<IllegalArgumentException> {
+            DateTime.isWithinDays("2024-11-07 00:00:00", "2024-11-07 00:00:00", 0)
+        }
+        assertEquals("For input 'days': 0", e4.message)
+
+        val e5 = assertThrows<IllegalArgumentException> {
+            DateTime.isWithinDays("2024-11-07 00:00:01", "2024-11-07 00:00:00", 1)
+        }
+        assertEquals("For input 'startDateTime': 2024-11-07 00:00:01 should be before 'endDateTime': 2024-11-07 00:00:00", e5.message)
+
+        assertTrue { DateTime.isWithinDays("2024-11-07 00:00:00", "2024-11-07 00:00:00", 1) }
+        assertTrue { DateTime.isWithinDays("2024-11-07 00:00:00", "2024-11-07 23:59:59", 1) }
+        assertTrue { DateTime.isWithinDays("2024-11-07 00:00:00", "2024-11-08 00:00:00", 1) }
+        assertTrue { DateTime.isWithinDays("2024-11-07 10:24:00", "2024-11-07 23:59:59", 1) }
+        assertTrue { DateTime.isWithinDays("2024-11-07 10:24:00", "2024-11-08 10:24:00", 1) }
+        assertFalse { DateTime.isWithinDays("2024-11-07 10:24:48", "2024-11-08 10:24:59", 1) }
+        assertFalse { DateTime.isWithinDays("2024-11-07 10:24:48", "2024-11-11 10:24:48", 2) }
     }
 
     @Test

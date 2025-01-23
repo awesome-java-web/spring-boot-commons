@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 日期时间工具类，该类不应被实例化，所有方法均为静态方法。
@@ -331,40 +332,40 @@ public final class DateTime {
     }
 
     /**
-     * 计算两个日期时间之间的天数差（包含结束日期），但仅适用于两个日期时间差为 24 小时的整数倍的情况。
+     * 判断两个日期时间是否在指定的天数范围内。
      * <p>
-     * 该方法首先验证传入的两个日期时间字符串是否符合可解析的格式。如果格式不正确，将抛出{@link IllegalArgumentException}异常。
-     * 接着，方法会解析日期时间字符串并计算它们之间的小时数差。然后，检查小时差是否为 24 小时的整数倍。如果是，则将小时差转换为天数并返回。
-     * 如果小时差加 1 后是 24 小时的整数倍，则同样将其转换为天数并返回。
-     * 如果两者之间的差值不是 24 小时的整数倍，方法将抛出异常。
-     * </p>
+     * 该方法根据传入的起始时间和结束时间字符串，解析成{@link LocalDateTime}对象，
+     * 然后检查这两个时间的差值是否在给定的天数范围内。若不满足条件，则抛出{@link IllegalArgumentException}异常。
      *
-     * @param dateTime        第一个日期时间字符串，必须是可解析的格式。
-     * @param anotherDateTime 第二个日期时间字符串，必须是可解析的格式。
-     * @return 两个日期时间之间的天数差（包含结束日期），只会返回差值为 24 小时的整数倍的天数。
-     * @throws IllegalArgumentException 如果日期时间格式不正确，或两个日期时间的差值不是 24 小时的整数倍，抛出该异常。
+     * @param startDateTime 起始日期时间字符串，必须为可解析的{@link LocalDateTime}格式。
+     * @param endDateTime   结束日期时间字符串，必须为可解析的{@link LocalDateTime}格式。
+     * @param days          允许的天数范围，必须是正整数。
+     * @return 如果两个日期时间之间的时间差不超过指定的天数范围，返回{@code true}否则返回{@code false}。
+     * @throws IllegalArgumentException 如果{@code startDateTime}无法解析，
+     *                                  或者{@code endDateTime}无法解析，
+     *                                  或者{@code days} <= 0，
+     *                                  或者{@code startDateTime}晚于{@code endDateTime}。
      */
-    public static long diffDays(final String dateTime, final String anotherDateTime) {
-        if (!isParseableLocalDateTime(dateTime)) {
-            throw new IllegalArgumentException("For input 'dateTime': " + dateTime);
+    public static boolean isWithinDays(final String startDateTime, final String endDateTime, final int days) {
+        if (!isParseableLocalDateTime(startDateTime)) {
+            throw new IllegalArgumentException("For input 'startDateTime': " + startDateTime);
         }
-        if (!isParseableLocalDateTime(anotherDateTime)) {
-            throw new IllegalArgumentException("For input 'anotherDateTime': " + anotherDateTime);
+        if (!isParseableLocalDateTime(endDateTime)) {
+            throw new IllegalArgumentException("For input 'endDateTime': " + endDateTime);
         }
-
-        LocalDateTime start = parseIgnoreMillis(dateTime);
-        LocalDateTime end = parseIgnoreMillis(anotherDateTime);
-        final long diffHours = Math.abs(ChronoUnit.HOURS.between(start, end));
-
-        if (diffHours % 24 == 0) {
-            return diffHours / 24;
+        // 0 days 没有意义
+        if (days <= 0) {
+            throw new IllegalArgumentException("For input 'days': " + days);
         }
 
-        if ((diffHours + 1) % 24 == 0) {
-            return (diffHours + 1) / 24;
+        LocalDateTime start = parseIgnoreMillis(startDateTime);
+        LocalDateTime end = parseIgnoreMillis(endDateTime);
+        if (start.isAfter(end)) {
+            final String message = String.format("For input 'startDateTime': %s should be before 'endDateTime': %s", startDateTime, endDateTime);
+            throw new IllegalArgumentException(message);
         }
 
-        throw new IllegalArgumentException("The difference between two date time is not a multiple of 24 hours");
+        return ChronoUnit.SECONDS.between(start, end) <= TimeUnit.DAYS.toSeconds(days);
     }
 
     /**
